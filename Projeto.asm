@@ -74,7 +74,7 @@ D16 DB'                      |_|___|__|__|\___/|__|__|_____|$'
 
 LINHA_L    DB 13,10,'$'
 INSERT_COIN DB '                         INSERT YOUR COIN - PRESS ENTER $'
-
+PRESS_EXIT DB '                                                        PARA SAIR - PRESS G        $'
 
 
 
@@ -94,7 +94,7 @@ call limpatela
 move_XY 1,3   ; 80 25  ; reposicionar cursor
 
 call tela_inicial
-
+move_XY 1,3   ; 80 25  ; reposicionar cursor
 call Vefica_CR
 
 
@@ -266,6 +266,10 @@ mov ah,9
 lea dx, INSERT_COIN
 int 21h 
 
+mov ah,9
+lea dx, PRESS_EXIT
+int 21h 
+
 
             ret 
             tela_inicial endp 
@@ -298,6 +302,8 @@ Espera:
 
 
     Acaba_com_o_programa_se_g proc 
+call ; FAZER INTERFACE DE FIM DE JOGO 
+
 
         mov ah,4ch 
         int 21h 
