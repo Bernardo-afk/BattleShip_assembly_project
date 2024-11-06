@@ -48,12 +48,13 @@ endm
 .data 
 ; ----------------------------------------------------------- ; 
 ;                       Interface                             ; 
-; ---------------------------------------------------------- ; 
+; ----------------------------------------------------------- ; 
 
    ;---------------------------------------------;
    ;           Inicial                           ;
-  ;---------------------------------------------;
+   ;---------------------------------------------;
 
+; Imagem inicial
 D1 DB '                              O  O  O$'
 D2 DB '                                      O$'
 D3 DB '                                     __|__$'
@@ -71,9 +72,36 @@ D14 DB'                      |   | |  _  |  |  |  _  |  | $'
 D15 DB'                      | | | |     |  |  |     |  |__$'
 D16 DB'                      |_|___|__|__|\___/|__|__|_____|$'
 
-
-LINHA_L    DB 13,10,'$'
 INSERT_COIN DB '                         INSERT YOUR COIN - PRESS ENTER $'
+
+; fim Imagem inicial 
+
+; parametro que cria uma linha em branco 
+LINHA_L    DB 13,10,'$'
+
+
+   ;---------------------------------------------;
+   ;  Interfaçe Final ]                          ;
+   ;---------------------------------------------;
+
+
+
+
+FIM1 DB'                            _______   __    __________        $'
+FIM2 DB'                           |   ____| |  |  |          |       $'
+FIM3 DB'                           |   |___  |  |  |   |  |   |       $'
+FIM4 DB'                           |   ____| |  |  |   |  |   |       $'
+FIM5 DB'                           |   |     |  |  |   |  |   |       $'
+FIM6 DB'                           |___|     |__|  |___|__|___|       $'  
+
+
+Agradecimento db '                         Obrigado por jogar, volte sempre ! $'
+
+
+
+
+
+; parametro de saida do jogo 
 PRESS_EXIT DB '                                                        PARA SAIR - PRESS G        $'
 
 
@@ -289,7 +317,7 @@ Espera:
     
 
     acaba : 
-      call Acaba_com_o_programa_se_g
+      call end_game
 
 
     limparateladousuario:
@@ -301,16 +329,6 @@ Espera:
           Vefica_CR endp 
 
 
-    Acaba_com_o_programa_se_g proc 
-call ; FAZER INTERFACE DE FIM DE JOGO 
-
-
-        mov ah,4ch 
-        int 21h 
-
-      ret 
-      Acaba_com_o_programa_se_g endp 
-
 
 
 
@@ -318,6 +336,96 @@ call ; FAZER INTERFACE DE FIM DE JOGO
 ;                        Fim Procedimentos                    ; 
 ; ---------------------------------------------------------- ; 
 
+
+; ----------------------------------------------------------- ; 
+;                        FINAL DO JOGO                  ; 
+; ---------------------------------------------------------- ; 
+
+
+    end_game proc 
+
+call limpatela
+
+    move_XY  1,9   ; mover cursor para altura desejada ( começar a imprimir no meio do programa ) 
+
+; todos os mov ah,9 são destinados ao visual do final do programa 
+    mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+    mov ah,9
+    lea dx, FIM1
+    int 21h 
+
+        mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+    mov ah,9
+    lea dx,FIM2
+    int 21h 
+
+        mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+    mov ah,9
+    lea dx,FIM3
+    int 21h 
+
+     mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+    mov ah,9 
+    lea dx,FIM4 
+    int 21h 
+
+     mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+    mov ah,9 
+    lea dx,FIM5
+      int 21h 
+
+       mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+
+    mov ah,9 
+    lea dx, FIM6 
+     int 21h 
+     
+     mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+   mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+   mov ah,9
+    lea dx, LINHA_L
+    int 21h 
+
+
+   mov ah,9
+    lea dx, Agradecimento
+    int 21h 
+
+  move_XY  80,25   ; mover cursor lá para baixo 
+
+
+
+
+
+        mov ah,4ch 
+        int 21h 
+
+      ret 
+      end_game  endp 
 
 
 end main 
