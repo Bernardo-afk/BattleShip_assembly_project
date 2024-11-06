@@ -41,10 +41,6 @@ endm
 ; ---------------------------------------------------------- ; 
 
 
-
-
-
-
 .data
   ; ----------------------------------------------------------- ;
   ;                       Interface                             ;
@@ -74,6 +70,7 @@ endm
 
   INSERT_COIN   DB   '                         INSERT YOUR COIN - PRESS ENTER $'
 
+
   ; fim Imagem inicial
 
   ; parametro que cria uma linha em branco
@@ -97,8 +94,9 @@ endm
 
   Agradecimento db   '                         Obrigado por jogar, volte sempre ! $'
 
+      TAKE_TIME db    '                                                   PRESS T to take a time     $'
 
-
+  INSERT_ANOTHER_COIN   DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
 
 
   ; parametro de saida do jogo
@@ -126,9 +124,6 @@ endm
 
 .code
 
-
-
-
   ; ----------------------------------------------------------- ;
   ; Espaço dedicado para o main                                 ;
   ; ----------------------------------------------------------  ;
@@ -139,7 +134,7 @@ main proc
                        mov      ax,@data              ; chamando data para AX
                        mov      ds,ax
 
-
+reinicia : 
 
                        call     limpatela
 
@@ -598,12 +593,37 @@ end_game proc
                        lea      dx, Agradecimento
                        int      21h
 
+                      mov ah,9 
+                      lea dx,  TAKE_TIME
+                      int 21h 
+
+              
+
+
+                mov ah,9 
+                      lea dx,  INSERT_ANOTHER_COIN
+                      int 21h 
+
+
+
+                      mov ah,1 
+                      int 21h 
+       mov bl,al 
                        move_XY  80,25                 ; mover cursor lá para baixo
 
 
+            
+                      cmp bl,'t'
+                        je finaldojogo
+                        
+   
+                       cmp bl,0dh     ; reinicia o programa 
+                       jmp reinicia
 
 
 
+
+finaldojogo : 
                        mov      ah,4ch
                        int      21h
 
