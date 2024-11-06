@@ -103,7 +103,23 @@ endm
 
   ; parametro de saida do jogo
   PRESS_EXIT    DB   '                                                 PARA SAIR - PRESS G        $'
- PRESS_RULES    DB   '                                                  PARA VER AS REGRAS - PRESS R        $'
+  PRESS_RULES   DB   '                                                  PARA VER AS REGRAS - PRESS R        $'
+
+
+  ; Regras
+
+  REGRA1        db   '              1 -           $'
+  REGRA2        db   '              2 -           $'
+  REGRA3        db   '              3 -           $'
+  REGRA4        db   '              4 -           $'
+  REGRA5        db   '              5 -           $'
+  REGRA6        db   '              6 -           $'
+
+
+
+
+
+
 
 
 
@@ -132,7 +148,8 @@ main proc
 
                        call     tela_inicial
                        move_XY  1,3                   ; 80 25  ; reposicionar cursor
-                       call     Vefica_CR
+
+                       call     Vefica_CR_RULES
 
 
                        mov      ah,4ch
@@ -332,7 +349,7 @@ tela_inicial proc
 tela_inicial endp
 
   ; pede entrada e verifica se é CR
-Vefica_CR proc
+Vefica_CR_RULES proc
  
                        MOV      AH, 01h               ; Função para ler entrada de um caractere
   Espera:              
@@ -340,6 +357,11 @@ Vefica_CR proc
                        cmp      AL,'g'
                        je       acaba
     
+                       cmp      AL,'r'
+                       je       regra
+    
+
+
                        CMP      AL, 0Dh               ; Compara se é "CR" (ASCII 13)
                        JZ       limparateladousuario  ; Se for "CR", salta para o fim e sai do procedimento
                        JMP      Espera                ; Caso contrário, continua esperando entrada
@@ -347,18 +369,149 @@ Vefica_CR proc
 
   acaba:               
                        call     end_game
+    
 
+  regra:               
+                       call     RULES
+
+                       jmp      skipverifycr
 
   limparateladousuario:
 
                        call     limpatela
 
+
+  skipverifycr:        
+
+
                        RET                            ; Sai do procedimento
 
-Vefica_CR endp
+Vefica_CR_RULES endp
+
+
+RULES proc
+
+                       call     limpatela
+
+                       move_XY  1,4
+
+  ; MOSTRAR AS REGRAS
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, REGRA1
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx,REGRA2
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx,REGRA3
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx,REGRA4
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx,REGRA5
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
 
 
 
+                       mov      ah,9
+                       lea      dx, REGRA6
+                       int      21h
+     
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+
+                       mov      ah,9
+                       lea      dx, INSERT_COIN
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, PRESS_EXIT
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+                       mov      ah,9
+                       lea      dx, LINHA_L
+                       int      21h
+
+call Vefica_CR_RULES
+
+                       ret
+
+RULES endp
 
 
   ; ----------------------------------------------------------- ;
