@@ -41,7 +41,7 @@ endm
 ; ---------------------------------------------------------- ; 
 
 
-.data
+.data 
   ; ----------------------------------------------------------- ;
   ;                       Interface                             ;
   ; ----------------------------------------------------------- ;
@@ -94,14 +94,14 @@ endm
 
   Agradecimento db   '                         Obrigado por jogar, volte sempre ! $'
 
-      TAKE_TIME db    '                                                   PRESS T to take a time     $'
+      TAKE_TIME db    '                                                   PRESS G TO EXIT     $'
 
   INSERT_ANOTHER_COIN   DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
 
 
   ; parametro de saida do jogo
-  PRESS_EXIT    DB   '                                                 PARA SAIR - PRESS G        $'
-  PRESS_RULES   DB   '                                                  PARA VER AS REGRAS - PRESS R        $'
+  PRESS_EXIT    DB   '                                                 EXIT GAME - PRESS G        $'
+  PRESS_RULES   DB   '                                                  SHOW THE RULES - PRESS R        $'
 
 
   ; Regras
@@ -613,7 +613,7 @@ end_game proc
 
 
             
-                      cmp bl,'t'
+                      cmp bl,'g'
                         je finaldojogo
                         
    
