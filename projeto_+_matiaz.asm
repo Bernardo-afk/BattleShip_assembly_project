@@ -770,7 +770,9 @@ jmp conferelinha
 
 mostra_posição:
 
+
      mov al,MATRIZEASY[si+bx]    ;  move para al o valor desejado
+
 
 push ax ; salva a posição da matriz 
 
@@ -831,7 +833,7 @@ xor ax,ax
 
 lea bx, mapa 
 
-iniciodamostraX: 
+iniciodamostraX: ; ver qual posição na linha 
 
 cmp si, ax 
 je mostrarX
@@ -841,6 +843,15 @@ jmp iniciodamostraX
 
 mostrarX:
 inc bx
+
+; modificar essa lógica a baixo para fazer com que as colunas fiquem funcionais 
+
+;add bx,23 ; segunda linha da matriz 
+;add bx,46 ; terceira linha da matriz 
+add bx, 69 ; quarta linha 
+
+
+
 mov byte ptr[bx], 'X'
 
 call limpatela
