@@ -18,31 +18,7 @@
              db 'H  |_|_|_|_|_|_|_|_|_|_|', 13, 10
              db 'I  |_|_|_|_|_|_|_|_|_|_|', 13, 10
              db 'J  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db '$'
-
-        ; Definição dos vetores de embarcações (cada par representa linha e coluna)
-        encouracado db 2, 3, 2, 4, 2, 5, 2, 6   ; 4 posições para o encouraçado
-        fragata db 5, 7, 5, 8                   ; 2 posições para a fragata
-        submarino1 db 10, 3                      ; 1 posição para o submarino 1
-        submarino2 db 3, 5                      ; 1 posição para o submarino 2
-        hidroaviao1 db 6, 2, 7, 2               ; 2 posições para o hidroavião 1
-        hidroaviao2 db 4, 9, 5, 9               ; 2 posições para o hidroavião 2
-
-        ; Mensagens de feedback
-        msg_acerto db 'Acertou uma parte da embarcacao! $', 10, 13
-        msg_agua db 'Acertou a agua! $', 10, 13
-
-.code
-main:
-    ; Inicializa o segmento de dados
-    mov ax, @data
-    mov ds, ax
-
-loop_inicio:
-    ; Exibir o mapa atual
-    call imprimir_mapa
-
-    ; Ler coordenadas do usuário
+call imprimir_mapa
     call ler_coordenadas
 
     ; Verificar se acertou alguma embarcação

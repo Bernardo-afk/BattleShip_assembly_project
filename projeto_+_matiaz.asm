@@ -87,33 +87,20 @@ endm
   ;---------------------------------------------;
 
         ; Mapa do jogo
-        mapa db '    0 1 2 3 4 5 6 7 8 9', 13, 10
-             db '    _ _ _ _ _ _ _ _ _ _', 13, 10
-             db 'A  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'B  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'C  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'D  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'E  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'F  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'G  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'H  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'I  |_|_|_|_|_|_|_|_|_|_|', 13, 10
-             db 'J  |_|_|_|_|_|_|_|_|_|_|', 13, 10
+        ll1   db '    0 1 2 3 4 5 6 7 8 9', 13, 10
+        ll2   db ' _ _ _ _ _ _ _ _ _ _', 13, 10
+
+       mapa  db '|_|_|_|_|_|_|_|_|_|_|', 13, 10    ; si -2 = '_'   si -4 = '_ ' ...
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
+             db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
              db '$'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -722,6 +709,12 @@ GAME_INTERFACE_EASY proc
 
 call limpatela
 
+call imprimir_mapa
+
+
+
+
+
  ;  Cl definido pelo nivel 
         
 xor cx,cx 
@@ -777,10 +770,16 @@ jmp conferelinha
 
 mostra_posição:
 
-
      mov al,MATRIZEASY[si+bx]    ;  move para al o valor desejado
 
-    
+push ax ; salva a posição da matriz 
+
+       call  atualizar_mapa 
+
+pop ax ; retorna a posição para verificar o acerto/erro 
+
+
+
     cmp al,1            ; compara para ver se há algum alvo 
     je acertou  
 
@@ -812,18 +811,49 @@ ret
 GAME_INTERFACE_EASY endp 
 
 
+; imprimir o campo 
+
+imprimir_mapa proc 
+
+    mov ah, 09h
+    lea dx, mapa
+    int 21h
+
+
+ret 
+imprimir_mapa endp 
+
+
+
+; se quero mudar a posição 0 ; si =1 ..... posição 1 ; si = 2 
+atualizar_mapa proc 
+xor ax,ax 
+
+lea bx, mapa 
+
+iniciodamostraX: 
+
+cmp si, ax 
+je mostrarX
+inc ax
+add bx,2  
+jmp iniciodamostraX
+
+mostrarX:
+inc bx
+mov byte ptr[bx], 'X'
+
+call limpatela
+call imprimir_mapa
+
+ret 
+atualizar_mapa endp 
 
 
 
 
 
-
-
-
-
-
-
-
+; falta pegar de acordo com a coluna /  
 
 
 ; interface medium 
