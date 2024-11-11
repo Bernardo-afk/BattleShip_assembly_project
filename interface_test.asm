@@ -1,14 +1,26 @@
 .model small
 .stack 100h
 
+vetor MACRO linha,coluna
+    
+          mov al,MATRIZ4X4[linha+coluna]    ;  move para al o valor desejado
+
+ENDM
+
+
+
+
+
+
+
 .data              
 
                 ;0 1 2 3 4 5 6 7 8 9
-    MATRIZ4X4 DB 1,0,0,0,0,0,0,0,0,0  ; A -0 
-              DB 0,1,0,0,0,0,0,0,0,0  ; B - 4 
-              DB 0,0,0,0,0,0,0,0,0,0  ; C - 8 
-              DB 0,0,0,0,0,0,0,0,0,0  ; D
-              DB 0,0,0,0,1,0,0,0,0,0  ; E
+    MATRIZ4X4 DB 1,2,0,0,0,1,0,0,0,0  ; A -0 
+              DB 2,2,0,0,0,0,0,0,0,0  ; B - 4 
+              DB 2,2,0,0,0,0,0,0,0,0  ; C - 8
+              DB 0,0,0,0,0,0,0,0,0,0  ; D 
+              DB 0,0,0,0,1,0,0,0,0,0  ; E   
               DB 0,0,0,0,0,0,0,0,0,0  ; F
               DB 0,0,0,0,0,0,0,0,0,0  ; G
               DB 0,0,0,0,0,0,0,0,0,0  ; H
@@ -48,12 +60,14 @@ processo proc
 
         ;  CX definido pelo nivel 
         
-    xor si, si               ; si = linha
-    xor bx, bx               ; bx = coluna
+
     mov cx, 30             ; Total de elementos a serem processados
-    xor ax,ax 
+ 
 
 l1:
+
+    xor si, si               ; si = linha
+    xor bx, bx               ; bx = coluna
 
 ; colocar proc de limpa tela 
 
@@ -67,7 +81,7 @@ int 21h    ; pegar linha
 and ax,0FH
 mov si,ax   ; salvando primeira posição 
 
-
+;; salvo correto 
 
 
 mov ah,9 
@@ -78,6 +92,20 @@ int 21h
 mov ah,1
 int 21h    ; pegar linha 
 
+call matrizleitura 
+
+    loop l1
+
+
+fim: 
+
+
+    ret
+processo endp
+
+
+
+matrizleitura proc 
 
 conferelinha : 
 
@@ -132,11 +160,16 @@ je mostra_posição
 add bx,4  ; passar para próxima coluna 
 
 
+
+
+
+
 mostra_posição:
 
-    mov al, MATRIZ4X4[si + bx] ; Move para AL o valor desejado
+     mov al,MATRIZ4X4[si+bx]    ;  move para al o valor desejado
+
     
-    cmp al,1
+    cmp al,2
     je acertou  
 
 jmp errou  
@@ -148,24 +181,15 @@ jmp errou
 
 jmp fim 
 
+
     errou : 
     mov ah,9 
     lea dx,erroufeio 
     int 21h
 
+ret 
 
-
-
-volta:
-    loop l1
-
-
-fim: 
-
-
-    ret
-processo endp
-
+matrizleitura endp 
 
 
 end main
