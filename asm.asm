@@ -3,11 +3,7 @@
 
 
 
-vetor MACRO linha,coluna
-    
-          mov al,MATRIZ4X4[linha+coluna]    ;  move para al o valor desejado
 
-ENDM
 
 
 .data
@@ -47,7 +43,7 @@ processo proc
     l1:      
 
 
-             vetor si,bx       ; acessa o macro
+             mov al,MATRIZ4X4[si+bx]    ;  move para al o valor desejado
 
 
              mov   dl,al
