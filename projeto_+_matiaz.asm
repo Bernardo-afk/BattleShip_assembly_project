@@ -148,11 +148,65 @@ endm
   ;---------------------------------------------;
 
 
+ ;0 1 2 3 4 5 6 7 8 9
+  MATRIZMEDIUM              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
+                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
+                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
+                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
+                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
+                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
+                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+
+  ; si = linha, bx = coluna
 
 
 
 
 
+;---------------------------------------------;
+  ;  Nivel HARD                               ;
+  ;---------------------------------------------;
+
+
+ 
+
+ ;0 1 2 3 4 5 6 7 8 9
+  MATRIZHARD              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
+                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
+                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
+                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
+                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
+                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
+                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+
+  ; si = linha, bx = coluna
+
+
+; ---------------------------------------------;
+  ;  Nivel UNCRUMBLE                               ;
+  ;---------------------------------------------;
+
+
+
+ ;0 1 2 3 4 5 6 7 8 9
+  MATRIZUNCRUMBLE              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
+                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
+                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
+                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
+                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
+                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
+                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
+                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+
+  ; si = linha, bx = coluna
 
 
 
@@ -945,6 +999,100 @@ GAME_INTERFACE_EASY endp
 
 GAME_INTERFACE_MEDIUM proc
 
+                           xor      cx,cx
+
+
+
+                           mov      cx,25
+
+                           l2:                      
+
+                           xor      bx,bx
+                           xor      si,si
+
+
+                           call     limpatela
+                           call     imprimir_mapa
+
+
+                           mov      ah,9
+                           lea      dx, Ask_linha
+                           int      21h
+
+                           mov      ah,1
+                           int      21h
+                           mov      si,ax
+                           and      si,0fh                        ; supondo que si = 1
+  ; si já está salvo
+
+
+
+                           mov      ah,9
+                           lea      dx , Ask_coluna
+                           int      21h
+
+                           mov      ah,1
+                           int      21h
+
+
+
+
+  confere_coluna2:          
+
+
+                           cmp      al, variavel_de_letra
+                           je       mostra_posição
+
+                           inc      variavel_de_letra
+                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      bx,10
+
+                           jmp      confere_coluna2
+
+
+mostra_posição2:
+
+
+                           mov      al,MATRIZMEDIUM[si+bx]          ;  move para al o valor desejado
+
+                           cmp      al,1
+                           je       acertou2
+
+     
+                           call     visual_errou
+
+                           jmp      skip2
+       
+
+
+  acertou2:                   
+                     call     visual_acertou
+
+
+
+  skip2:                    
+
+                           mov      variavel_de_soma_coluna,0
+                           mov      variavel_de_letra,41h
+                           dec      chances_var
+
+
+                           call     feedback
+
+                           mov      ah,1
+                           int      21h
+
+                           cmp      ax, 0Dh
+                           je       skps2
+                           int      3
+  skps2:                    
+
+
+                           loop     l2
+
+
+
+
                            ret
 GAME_INTERFACE_MEDIUM endp
 
@@ -952,6 +1100,100 @@ GAME_INTERFACE_MEDIUM endp
   ; interface hard
 
 GAME_INTERFACE_HARD proc
+                 
+                   xor      cx,cx
+
+
+
+                           mov      cx,20
+
+                           l3:                      
+
+                           xor      bx,bx
+                           xor      si,si
+
+
+                           call     limpatela
+                           call     imprimir_mapa
+
+
+                           mov      ah,9
+                           lea      dx, Ask_linha
+                           int      21h
+
+                           mov      ah,1
+                           int      21h
+                           mov      si,ax
+                           and      si,0fh                        ; supondo que si = 1
+  ; si já está salvo
+
+
+
+                           mov      ah,9
+                           lea      dx , Ask_coluna
+                           int      21h
+
+                           mov      ah,1
+                           int      21h
+
+
+
+
+  confere_coluna3:          
+
+
+                           cmp      al, variavel_de_letra
+                           je       mostra_posição3
+
+                           inc      variavel_de_letra
+                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      bx,10
+
+                           jmp      confere_coluna3
+
+
+mostra_posição3:
+
+
+                           mov      al,MATRIZHARD[si+bx]          ;  move para al o valor desejado
+
+                           cmp      al,1
+                           je       acertou3
+
+     
+                           call     visual_errou
+
+                           jmp      skip3
+       
+
+
+  acertou3:                   
+                     call     visual_acertou
+
+
+
+  skip3:                    
+
+                           mov      variavel_de_soma_coluna,0
+                           mov      variavel_de_letra,41h
+                           dec      chances_var
+
+
+                           call     feedback
+
+                           mov      ah,1
+                           int      21h
+
+                           cmp      ax, 0Dh
+                           je       skps3
+                           int      3
+  skps3:                    
+
+
+                           loop     l3
+
+
+
 
                            ret
 GAME_INTERFACE_HARD endp
@@ -959,6 +1201,96 @@ GAME_INTERFACE_HARD endp
   ; interface uncrumble do game
 
 GAME_INTERFACE_UNCRUMBLE proc
+     xor      cx,cx
+
+
+
+                           mov      cx,20
+
+                           l4:                      
+
+                           xor      bx,bx
+                           xor      si,si
+
+
+                           call     limpatela
+                           call     imprimir_mapa
+
+
+                           mov      ah,9
+                           lea      dx, Ask_linha
+                           int      21h
+
+                           mov      ah,1
+                           int      21h
+                           mov      si,ax
+                           and      si,0fh                        ; supondo que si = 1
+  ; si já está salvo
+
+
+
+                           mov      ah,9
+                           lea      dx , Ask_coluna
+                           int      21h
+
+                           mov      ah,1
+                           int      21h
+
+
+
+
+  confere_coluna4:          
+
+
+                           cmp      al, variavel_de_letra
+                           je       mostra_posição4
+
+                           inc      variavel_de_letra
+                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      bx,10
+
+                           jmp      confere_coluna4
+
+
+mostra_posição4:
+
+
+                           mov      al,MATRIZUNCRUMBLE[si+bx]          ;  move para al o valor desejado
+
+                           cmp      al,1
+                           je       acertou4
+
+     
+                           call     visual_errou
+
+                           jmp      skip4
+       
+
+
+  acertou4:                   
+                     call     visual_acertou
+
+
+
+  skip4:                    
+
+                           mov      variavel_de_soma_coluna,0
+                           mov      variavel_de_letra,41h
+                           dec      chances_var
+
+
+                           call     feedback
+
+                           mov      ah,1
+                           int      21h
+
+                           cmp      ax, 0Dh
+                           je       skps4
+                           int      3
+  skps4:                    
+
+
+                           loop     l4
 
                            ret
 GAME_INTERFACE_UNCRUMBLE endp
