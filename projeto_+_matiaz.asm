@@ -87,8 +87,8 @@ endm
   ;---------------------------------------------;
 
         ; Mapa do jogo
-        ll1   db '    0 1 2 3 4 5 6 7 8 9', 13, 10
-        ll2   db ' _ _ _ _ _ _ _ _ _ _', 13, 10
+     ;   ll1   db '    0 1 2 3 4 5 6 7 8 9', 13, 10
+      ;  ll2   db ' _ _ _ _ _ _ _ _ _ _', 13, 10
 
        mapa  db '|_|_|_|_|_|_|_|_|_|_|', 13, 10    ; si -2 = '_'   si -4 = '_ ' ...
              db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
@@ -102,7 +102,15 @@ endm
              db '|_|_|_|_|_|_|_|_|_|_|', 13, 10
              db '$'
 
+    variavel_de_soma_coluna db 0 
+  variavel_de_letra db 41h  ; iniciar variavel com a letra 'A' ( para comparação futura ) 
+ 
+ next_try db 10,13 ,'PRESS ENTER TO NEXT TRY $'
+ REMAINING_CHANCES db 10,13 ,'YOU HAVE $' 
+ trys db 'Trys $'
+ 
 
+chances_var db 0 
 
   ;---------------------------------------------;
   ;  Nivel EASY                                 ;
@@ -218,6 +226,7 @@ reinicia :
                        move_XY  1,3                   ; 80 25  ; reposicionar cursor
 
 
+                     
                        call     tela_inicial
                        move_XY  1,3                   ; 80 25  ; reposicionar cursor
 
@@ -703,31 +712,103 @@ Level_select endp
 ; ----------------------------------------------------------- ;
   ;                        the game                           ;
   ; ---------------------------------------------------------- ;
+; imprimir o mapar 
+imprimir_mapa proc 
 
-; interface easy 
-GAME_INTERFACE_EASY proc 
+push_all
+
+    mov ah, 09h
+    lea dx, mapa    ; imprime o mapa 
+    int 21h
+
+pop_all
+
+ret 
+imprimir_mapa endp 
+
+
+visual_errou proc 
+
+
+lea bx,mapa 
+;add bx,1  ; primeira posição da primeira linha 
+;add bx,24 ;  primeira posição da segunda linha 
+;add bx,47   ; primeira posição da terceira linha 
+
+
+add bx,si     ; adds para pegar a posição na linha 
+add bx,si
+
+
+
+add bx,1 ; passar para posição do quadradinho 
+add bl,variavel_de_soma_coluna 
+
+mov byte ptr [bx], 'O'
 
 call limpatela
-
 call imprimir_mapa
 
 
 
 
 
- ;  Cl definido pelo nivel 
-        
-xor cx,cx 
 
-    mov cl, 30             ; Total de elementos a serem processados
- 
 
-l1:
+ret 
+visual_errou endp 
 
-    xor si, si               ; si = linha
-    xor bx, bx               ; bx = coluna
 
-; colocar proc de limpa tela 
+visual_acertou proc 
+
+
+lea bx,mapa 
+;add bx,1  ; primeira posição da primeira linha 
+;add bx,24 ;  primeira posição da segunda linha 
+;add bx,47   ; primeira posição da terceira linha 
+
+
+add bx,si     ; adds para pegar a posição na linha 
+add bx,si
+
+
+
+add bx,1 ; passar para posição do quadradinho 
+add bl,variavel_de_soma_coluna 
+
+mov byte ptr [bx], 'X'
+
+call limpatela
+call imprimir_mapa
+
+
+ret 
+visual_acertou endp 
+
+
+; atualiza o mapa 
+
+
+
+; interface easy 
+
+GAME_INTERFACE_EASY proc 
+
+
+xor cx,cx
+
+
+
+mov cx,30 
+
+l1 :
+
+xor bx,bx 
+xor si,si 
+
+
+call limpatela
+call imprimir_mapa
 
 
 mov ah,9 
@@ -735,136 +816,85 @@ lea dx, Ask_linha
 int 21h 
 
 mov ah,1 
-int 21h    ; pegar linha 
-and ax,0FH
-mov si,ax   ; salvando a posição da linha  
-
+int 21h 
+mov si,ax
+and si,0fh              ; supondo que si = 1 
+                    ; si já está salvo 
 
 
 
 mov ah,9 
-lea dx, Ask_coluna  ; A-J
+lea dx , Ask_coluna
+int 21h 
+
+mov ah,1 
 int 21h 
 
 
-mov ah,1
-int 21h    ; pegar linha 
 
 
-add ch, 41h
+confere_coluna:
 
-conferelinha : 
 
-cmp al, ch ; comparar a letra digitada com cl ( para identificar a coordenada ) 
+cmp al, variavel_de_letra
 je mostra_posição 
-add bx,10  ; passar para próxima coluna 
-add ch,1
 
-jmp conferelinha 
+inc variavel_de_letra
+add variavel_de_soma_coluna,23 
+add bx,10
 
-
-
-
-
+jmp confere_coluna 
 
 
 mostra_posição:
 
 
-     mov al,MATRIZEASY[si+bx]    ;  move para al o valor desejado
+ mov al,MATRIZEASY[si+bx]    ;  move para al o valor desejado
+
+        cmp al,1
+        je acertou 
+
+     
+        call visual_errou
+
+   mov ah,9 
+        lea dx,Errou_tiro
+        int 21h 
+
+        jmp skip 
+
+        acertou: 
+       
+        call visual_acertou 
+        mov ah,9 
+        lea dx,Acertou_tiro
+        int 21h 
+
+skip: 
+
+mov variavel_de_soma_coluna,0
+mov variavel_de_letra,41h
+dec chances_var
 
 
-push ax ; salva a posição da matriz 
+call feedback
 
-       call  atualizar_mapa 
+mov ah,1 
+int 21h 
 
-pop ax ; retorna a posição para verificar o acerto/erro 
+cmp ax, 0Dh
+je l1 
 
+int 3
 
-
-    cmp al,1            ; compara para ver se há algum alvo 
-    je acertou  
-
-jmp errou  
-
-    acertou: 
-    mov ah,9 
-    lea dx,Acertou_tiro         
-    int 21h 
-
-jmp fim 
-
-
-    errou : 
-    mov ah,9 
-    lea dx,Errou_tiro 
-    int 21h
-
-loop l1 
+loop l1
 
 
 
-
-
-
-fim: 
 
 ret 
+
 GAME_INTERFACE_EASY endp 
-
-
-; imprimir o campo 
-
-imprimir_mapa proc 
-
-    mov ah, 09h
-    lea dx, mapa
-    int 21h
-
-
-ret 
-imprimir_mapa endp 
-
-
-
-; se quero mudar a posição 0 ; si =1 ..... posição 1 ; si = 2 
-atualizar_mapa proc 
-xor ax,ax 
-
-lea bx, mapa 
-
-iniciodamostraX: ; ver qual posição na linha 
-
-cmp si, ax 
-je mostrarX
-inc ax
-add bx,2  
-jmp iniciodamostraX
-
-mostrarX:
-inc bx
-
-; modificar essa lógica a baixo para fazer com que as colunas fiquem funcionais 
-
-;add bx,23 ; segunda linha da matriz 
-;add bx,46 ; terceira linha da matriz 
-add bx, 69 ; quarta linha 
-
-
-
-mov byte ptr[bx], 'X'
-
-call limpatela
-call imprimir_mapa
-
-ret 
-atualizar_mapa endp 
-
-
-
-
-
-; falta pegar de acordo com a coluna /  
 
 
 ; interface medium 
@@ -894,6 +924,25 @@ GAME_INTERFACE_UNCRUMBLE endp
 ; ----------------------------------------------------------- ;
   ;                        Fim Procedimentos                    ;
   ; ---------------------------------------------------------- ;
+
+feedback proc 
+
+push_all
+ 
+mov ah,9 
+lea dx,LINHA_L
+int 21h 
+
+
+mov ah,9 
+lea dx , next_try
+int 21h 
+
+
+pop_all
+
+ret 
+feedback endp 
 
 
   ; ----------------------------------------------------------- ;
