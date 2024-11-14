@@ -5,9 +5,9 @@
 
 
 
-; FAZER CONTADOR DE ACERTOS PARA QUE SAIBA SE ELE VENCEU O JOGO , se ele perdeu , o contador nao vai ter chegado lah 
-1
-; ----------------------------------------------------------- ; 
+; FAZER CONTADOR DE ACERTOS PARA QUE SAIBA SE ELE VENCEU O JOGO , se ele perdeu , o contador nao vai ter chegado lah  ; 19 posições
+
+; ------1----------------------------------------------------- ; 
 ;                       Macros                               ; 
 ; ---------------------------------------------------------- ; 
 
@@ -133,6 +133,8 @@ endm
 
   contadoruncrumble db '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
 
+  contador_saber_se_venceu db 19
+
   remaining_chances db 10,13, 'You have $'
   more_chances db ' more chances $'
 
@@ -249,6 +251,8 @@ endm
 
   Agradecimento           db   '                         Obrigado por jogar, volte sempre ! $'
 
+  Agradecimento2           db   '                         Parabens por vencer o jogar, volte sempre ! $'
+
   TAKE_TIME               db   '                                                   PRESS G TO EXIT     $'
 
   INSERT_ANOTHER_COIN     DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
@@ -296,6 +300,10 @@ main proc
 
                            mov      ax,@data                    ; chamando data para AX
                            mov      ds,ax
+
+
+
+
 
   reinicia:                
 
@@ -871,6 +879,7 @@ visual_acertou proc
 
                            push_all
 
+  sub contador_saber_se_venceu,1
                            lea      bx,mapa
   ;add bx,1  ; primeira posição da primeira linha
   ;add bx,24 ;  primeira posição da segunda linha
@@ -897,6 +906,11 @@ visual_acertou proc
                            int      21h
 
 
+
+
+
+
+
                            pop_all
 
                            ret
@@ -910,7 +924,7 @@ visual_acertou endp
   ; interface easy
 
 GAME_INTERFACE_EASY proc
-
+xor cx,cx 
 mov cx,30
 
                        
@@ -976,6 +990,7 @@ mostra_posição:
 
   acertou:                 
                            call     visual_acertou
+                    
 
 
 
@@ -995,8 +1010,10 @@ mostra_posição:
                           
                            mov      ah,1
                            int      21h
-                          cmp ax,78h ; substituir pelo hexa de x
+
+                          cmp al,'x' 
                           je saidaqui2
+
 
 
 
@@ -1007,6 +1024,8 @@ mostra_posição:
                   jmp l1
 
 saidaqui2:
+
+call end_game
                            ret
 
 GAME_INTERFACE_EASY endp
@@ -1095,19 +1114,25 @@ mostra_posição2:
 
                            call     feedback
 
+                                 
                            mov      ah,1
                            int      21h
 
-                           cmp      ax, 0Dh
-                           je       skps2
-                           int      3
-  skps2:                   
-
-
-                           loop     l2
+                          cmp al,'x' 
+                          je saidaqui3
 
 
 
+
+
+                  dec cx
+                  cmp cx,0
+                  je saidaqui3      ; decrementar o 'loop'
+                  jmp l1
+
+saidaqui3:
+
+call end_game
 
                            ret
 GAME_INTERFACE_MEDIUM endp
@@ -1196,16 +1221,25 @@ mostra_posição3:
 
                            call     feedback
 
+                           
                            mov      ah,1
                            int      21h
 
-                           cmp      ax, 0Dh
-                           je       skps3
-                           int      3
-  skps3:                   
+                          cmp al,'x' 
+                          je saidaqui4
 
 
-                           loop     l3
+
+
+
+                  dec cx
+                  cmp cx,0
+                  je saidaqui4      ; decrementar o 'loop'
+                  jmp l1
+
+saidaqui4:
+
+call end_game
 
 
 
@@ -1296,29 +1330,25 @@ mostra_posição4:
                            call     feedback
 
     
+                                    
                            mov      ah,1
                            int      21h
-                      mov bl,al
 
-                         cmp bl,'x'
-                          je skipall
-
-                           cmp      al, 0Dh
-                           je       skps4
-      
-
-                        
+                          cmp al,'x' 
+                          je saidaqui5
 
 
 
 
 
+                  dec cx
+                  cmp cx,0
+                  je saidaqui5      ; decrementar o 'loop'
+                  jmp l1
 
+saidaqui5:
 
-  skps4:                   
-
-
-                           loop     l4
+call end_game
 
 skipall:
 mov ah,4ch
@@ -1336,6 +1366,22 @@ feedback proc
 
                            push_all
  
+
+        cmp contador_saber_se_venceu,0
+        je winer
+
+jmp continua
+        winer: 
+
+call win_game
+continua:
+
+
+
+
+
+
+
                            mov      ah,9
                            lea      dx,LINHA_L
                            int      21h
@@ -1473,6 +1519,118 @@ end_game proc
 
                            ret
 end_game endp
+
+
+
+win_game proc
+
+                           call     limpatela
+
+                           move_XY  1,9                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+
+  ; todos os mov ah,9 são destinados ao visual do final do programa
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, FIM1
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM2
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM3
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM4
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM5
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+
+                           mov      ah,9
+                           lea      dx, FIM6
+                           int      21h
+     
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+
+                           mov      ah,9
+                           lea      dx, Agradecimento2
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,  TAKE_TIME
+                           int      21h
+
+              
+                           mov      ah,9
+                           lea      dx,  INSERT_ANOTHER_COIN
+                           int      21h
+
+
+
+                           mov      ah,1
+                           int      21h
+                           mov      bl,al
+                           move_XY  80,25                       ; mover cursor lá para baixo
+
+
+            
+                           cmp      bl,'g'
+                           je       finaldojogo2
+                        
+   
+                           cmp      bl,0dh                      ; reinicia o programa
+                           jmp      reinicia
+
+
+
+
+  finaldojogo2:             
+                           mov      ah,4ch
+                           int      21h
+
+                           ret
+win_game endp
+
+
 
 
 end main 
