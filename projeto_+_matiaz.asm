@@ -5,7 +5,11 @@
 
 
 
-; FAZER CONTADOR DE ACERTOS PARA QUE SAIBA SE ELE VENCEU O JOGO , se ele perdeu , o contador nao vai ter chegado lah  ; 19 posições
+; ; falta implementar sistema de falar quantas tentativas falta / verificar se está certo o numero de tentativas em cada um 
+; fazer as regras ; e tela que perdeu o jogo 
+; falta zerar TUDO/ voltar ao valor original quando reinicia o programa 
+
+
 
 ; ------1----------------------------------------------------- ; 
 ;                       Macros                               ; 
