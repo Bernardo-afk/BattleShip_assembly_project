@@ -1,6 +1,12 @@
 .model small 
 .stack 100h   ; tela do prompt 80 : 25
 
+
+
+
+
+; FAZER CONTADOR DE ACERTOS PARA QUE SAIBA SE ELE VENCEU O JOGO , se ele perdeu , o contador nao vai ter chegado lah 
+1
 ; ----------------------------------------------------------- ; 
 ;                       Macros                               ; 
 ; ---------------------------------------------------------- ; 
@@ -110,15 +116,25 @@ endm
   variavel_de_soma_coluna db   0
   variavel_de_letra       db   41h                                                                                    ; iniciar variavel com a letra 'A' ( para comparação futura )
  
-  next_try                db   10,13 ,'PRESS ENTER TO NEXT TRY $'
-  REMAINING_CHANCES       db   10,13 ,'YOU HAVE $'
-  trys                    db   'Trys $'
-  
 
-  chances_var             db   0
+  next_try                db   10,13 ,'PRESS ENTER TO NEXT TRY $'
+
+  sair_em_qualquer_momento db 10,13, 'PRESS X to exit$'
+
+
 
   numeros_linha           db   ' 0 1 2 3 4 5 6 7 8 9 $'
 
+  contadoreasy      db '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1'
+
+  contadormedium db '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
+
+  contadorhard db '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
+
+  contadoruncrumble db '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
+
+  remaining_chances db 10,13, 'You have $'
+  more_chances db ' more chances $'
 
   ;---------------------------------------------;
   ;  Nivel EASY                                 ;
@@ -148,8 +164,8 @@ endm
   ;---------------------------------------------;
 
 
- ;0 1 2 3 4 5 6 7 8 9
-  MATRIZMEDIUM              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
+  ;0 1 2 3 4 5 6 7 8 9
+  MATRIZMEDIUM            DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
                           DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
                           DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
@@ -166,14 +182,14 @@ endm
 
 
 
-;---------------------------------------------;
+  ;---------------------------------------------;
   ;  Nivel HARD                               ;
   ;---------------------------------------------;
 
 
  
 
- ;0 1 2 3 4 5 6 7 8 9
+  ;0 1 2 3 4 5 6 7 8 9
   MATRIZHARD              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
                           DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
                           DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
@@ -188,14 +204,14 @@ endm
   ; si = linha, bx = coluna
 
 
-; ---------------------------------------------;
+  ; ---------------------------------------------;
   ;  Nivel UNCRUMBLE                               ;
   ;---------------------------------------------;
 
 
 
- ;0 1 2 3 4 5 6 7 8 9
-  MATRIZUNCRUMBLE              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
+  ;0 1 2 3 4 5 6 7 8 9
+  MATRIZUNCRUMBLE         DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
                           DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
                           DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
@@ -278,19 +294,19 @@ endm
 
 main proc
 
-                           mov      ax,@data                      ; chamando data para AX
+                           mov      ax,@data                    ; chamando data para AX
                            mov      ds,ax
 
   reinicia:                
 
                            call     limpatela
 
-                           move_XY  1,3                           ; 80 25  ; reposicionar cursor
+                           move_XY  1,3                         ; 80 25  ; reposicionar cursor
 
 
                      
                            call     tela_inicial
-                           move_XY  1,3                           ; 80 25  ; reposicionar cursor
+                           move_XY  1,3                         ; 80 25  ; reposicionar cursor
 
                            call     Vefica_CR_RULES
 
@@ -341,7 +357,7 @@ limpatela endp
 
   ; Rotina para imprimir uma string
 imprimir proc
-                           mov      ah, 09h                       ; Função DOS para imprimir string
+                           mov      ah, 09h                     ; Função DOS para imprimir string
                            int      21h
                            ret
 imprimir endp
@@ -496,9 +512,9 @@ tela_inicial endp
   ; pede entrada e verifica se é CR
 Vefica_CR_RULES proc
  
-                           MOV      AH, 01h                       ; Função para ler entrada de um caractere
+                           MOV      AH, 01h                     ; Função para ler entrada de um caractere
   Espera:                  
-                           INT      21h                           ; Chama interrupção para receber caractere
+                           INT      21h                         ; Chama interrupção para receber caractere
                            cmp      AL,'g'
                            je       acaba
     
@@ -507,9 +523,9 @@ Vefica_CR_RULES proc
     
 
 
-                           CMP      AL, 0Dh                       ; Compara se é "CR" (ASCII 13)
-                           JZ       limparateladousuario          ; Se for "CR", salta para o fim e sai do procedimento
-                           JMP      Espera                        ; Caso contrário, continua esperando entrada
+                           CMP      AL, 0Dh                     ; Compara se é "CR" (ASCII 13)
+                           JZ       limparateladousuario        ; Se for "CR", salta para o fim e sai do procedimento
+                           JMP      Espera                      ; Caso contrário, continua esperando entrada
     
 
   acaba:                   
@@ -529,7 +545,7 @@ Vefica_CR_RULES proc
   skipverifycr:            
 
 
-                           RET                                    ; Sai do procedimento
+                           RET                                  ; Sai do procedimento
 
 Vefica_CR_RULES endp
 
@@ -778,7 +794,7 @@ imprimir_mapa proc
 
                            push_all
 
-  
+ 
                            mov      ah,9
                            lea      dx , LINHA_L
                            int      21h
@@ -798,10 +814,10 @@ imprimir_mapa proc
                            lea      dx , LINHA_L
                            int      21h
 
-
+ 
 
                            mov      ah, 09h
-                           lea      dx, mapa                      ; imprime o mapa
+                           lea      dx, mapa                    ; imprime o mapa
                            int      21h
 
 
@@ -823,12 +839,12 @@ visual_errou proc
   ;add bx,47   ; primeira posição da terceira linha
 
 
-                           add      bx,si                         ; adds para pegar a posição na linha
+                           add      bx,si                       ; adds para pegar a posição na linha
                            add      bx,si
 
 
 
-                           add      bx,1                          ; passar para posição do quadradinho
+                           add      bx,1                        ; passar para posição do quadradinho
                            add      bl,variavel_de_soma_coluna
 
                            mov      byte ptr [bx], '~'
@@ -861,12 +877,12 @@ visual_acertou proc
   ;add bx,47   ; primeira posição da terceira linha
 
 
-                           add      bx,si                         ; adds para pegar a posição na linha
+                           add      bx,si                       ; adds para pegar a posição na linha
                            add      bx,si
 
 
 
-                           add      bx,1                          ; passar para posição do quadradinho
+                           add      bx,1                        ; passar para posição do quadradinho
                            add      bl,variavel_de_soma_coluna
 
                            mov      byte ptr [bx], 11011100b
@@ -895,14 +911,10 @@ visual_acertou endp
 
 GAME_INTERFACE_EASY proc
 
+mov cx,30
 
-                           xor      cx,cx
-
-
-
-                           mov      cx,30
-
-                           l1:                      
+                       
+  l1:                      
 
                            xor      bx,bx
                            xor      si,si
@@ -919,7 +931,7 @@ GAME_INTERFACE_EASY proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                        ; supondo que si = 1
+                           and      si,0fh                      ; supondo que si = 1
   ; si já está salvo
 
 
@@ -941,7 +953,7 @@ GAME_INTERFACE_EASY proc
                            je       mostra_posição
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna
@@ -950,7 +962,7 @@ GAME_INTERFACE_EASY proc
 mostra_posição:
 
 
-                           mov      al,MATRIZEASY[si+bx]          ;  move para al o valor desejado
+                           mov      al,MATRIZEASY[si+bx]        ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou
@@ -962,8 +974,8 @@ mostra_posição:
        
 
 
-  acertou:                   
-                     call     visual_acertou
+  acertou:                 
+                           call     visual_acertou
 
 
 
@@ -971,25 +983,30 @@ mostra_posição:
 
                            mov      variavel_de_soma_coluna,0
                            mov      variavel_de_letra,41h
-                           dec      chances_var
+                         
+
 
 
                            call     feedback
 
+           
+                      
+                  
+                          
                            mov      ah,1
                            int      21h
-
-                           cmp      ax, 0Dh
-                           je       skps
-                           int      3
-  skps:                    
-
-
-                           loop     l1
+                          cmp ax,78h ; substituir pelo hexa de x
+                          je saidaqui2
 
 
 
 
+                  dec cx
+                  cmp cx,0
+                  je saidaqui2      ; decrementar o 'loop'
+                  jmp l1
+
+saidaqui2:
                            ret
 
 GAME_INTERFACE_EASY endp
@@ -1005,7 +1022,7 @@ GAME_INTERFACE_MEDIUM proc
 
                            mov      cx,25
 
-                           l2:                      
+  l2:                      
 
                            xor      bx,bx
                            xor      si,si
@@ -1022,7 +1039,7 @@ GAME_INTERFACE_MEDIUM proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                        ; supondo que si = 1
+                           and      si,0fh                      ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1037,14 +1054,14 @@ GAME_INTERFACE_MEDIUM proc
 
 
 
-  confere_coluna2:          
+  confere_coluna2:         
 
 
                            cmp      al, variavel_de_letra
-                           je       mostra_posição
+                           je       mostra_posição2
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna2
@@ -1053,7 +1070,7 @@ GAME_INTERFACE_MEDIUM proc
 mostra_posição2:
 
 
-                           mov      al,MATRIZMEDIUM[si+bx]          ;  move para al o valor desejado
+                           mov      al,MATRIZMEDIUM[si+bx]      ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou2
@@ -1065,17 +1082,16 @@ mostra_posição2:
        
 
 
-  acertou2:                   
-                     call     visual_acertou
+  acertou2:                
+                           call     visual_acertou
 
 
 
-  skip2:                    
+  skip2:                   
 
                            mov      variavel_de_soma_coluna,0
                            mov      variavel_de_letra,41h
-                           dec      chances_var
-
+                      
 
                            call     feedback
 
@@ -1085,7 +1101,7 @@ mostra_posição2:
                            cmp      ax, 0Dh
                            je       skps2
                            int      3
-  skps2:                    
+  skps2:                   
 
 
                            loop     l2
@@ -1101,13 +1117,13 @@ GAME_INTERFACE_MEDIUM endp
 
 GAME_INTERFACE_HARD proc
                  
-                   xor      cx,cx
+                           xor      cx,cx
 
 
 
                            mov      cx,20
 
-                           l3:                      
+  l3:                      
 
                            xor      bx,bx
                            xor      si,si
@@ -1124,7 +1140,7 @@ GAME_INTERFACE_HARD proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                        ; supondo que si = 1
+                           and      si,0fh                      ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1139,14 +1155,14 @@ GAME_INTERFACE_HARD proc
 
 
 
-  confere_coluna3:          
+  confere_coluna3:         
 
 
                            cmp      al, variavel_de_letra
                            je       mostra_posição3
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna3
@@ -1155,7 +1171,7 @@ GAME_INTERFACE_HARD proc
 mostra_posição3:
 
 
-                           mov      al,MATRIZHARD[si+bx]          ;  move para al o valor desejado
+                           mov      al,MATRIZHARD[si+bx]        ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou3
@@ -1167,17 +1183,16 @@ mostra_posição3:
        
 
 
-  acertou3:                   
-                     call     visual_acertou
+  acertou3:                
+                           call     visual_acertou
 
 
 
-  skip3:                    
+  skip3:                   
 
                            mov      variavel_de_soma_coluna,0
                            mov      variavel_de_letra,41h
-                           dec      chances_var
-
+                         
 
                            call     feedback
 
@@ -1187,7 +1202,7 @@ mostra_posição3:
                            cmp      ax, 0Dh
                            je       skps3
                            int      3
-  skps3:                    
+  skps3:                   
 
 
                            loop     l3
@@ -1201,13 +1216,13 @@ GAME_INTERFACE_HARD endp
   ; interface uncrumble do game
 
 GAME_INTERFACE_UNCRUMBLE proc
-     xor      cx,cx
+                           xor      cx,cx
 
 
 
-                           mov      cx,20
+                           mov      cx,15
 
-                           l4:                      
+  l4:                      
 
                            xor      bx,bx
                            xor      si,si
@@ -1224,7 +1239,7 @@ GAME_INTERFACE_UNCRUMBLE proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                        ; supondo que si = 1
+                           and      si,0fh                      ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1239,14 +1254,14 @@ GAME_INTERFACE_UNCRUMBLE proc
 
 
 
-  confere_coluna4:          
+  confere_coluna4:         
 
 
                            cmp      al, variavel_de_letra
                            je       mostra_posição4
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25      ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna4
@@ -1255,7 +1270,7 @@ GAME_INTERFACE_UNCRUMBLE proc
 mostra_posição4:
 
 
-                           mov      al,MATRIZUNCRUMBLE[si+bx]          ;  move para al o valor desejado
+                           mov      al,MATRIZUNCRUMBLE[si+bx]   ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou4
@@ -1267,30 +1282,46 @@ mostra_posição4:
        
 
 
-  acertou4:                   
-                     call     visual_acertou
+  acertou4:                
+                           call     visual_acertou
 
 
 
-  skip4:                    
+  skip4:                   
 
                            mov      variavel_de_soma_coluna,0
                            mov      variavel_de_letra,41h
-                           dec      chances_var
-
+                      
 
                            call     feedback
 
+    
                            mov      ah,1
                            int      21h
+                      mov bl,al
 
-                           cmp      ax, 0Dh
+                         cmp bl,'x'
+                          je skipall
+
+                           cmp      al, 0Dh
                            je       skps4
-                           int      3
-  skps4:                    
+      
+
+                        
+
+
+
+
+
+
+
+  skps4:                   
 
 
                            loop     l4
+
+skipall:
+mov ah,4ch
 
                            ret
 GAME_INTERFACE_UNCRUMBLE endp
@@ -1315,15 +1346,21 @@ feedback proc
                            int      21h
 
 
+                          mov ah,9 
+                          lea dx,sair_em_qualquer_momento
+                          int 21h 
+
+
+
+
+                      
+
                            pop_all
 
                            ret
 feedback endp
 
-visual_acertou_dois proc
 
-                           ret
-visual_acertou_dois endp
   ; ----------------------------------------------------------- ;
   ;                        FINAL DO JOGO                       ;
   ; ---------------------------------------------------------- ;
@@ -1333,7 +1370,7 @@ end_game proc
 
                            call     limpatela
 
-                           move_XY  1,9                           ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+                           move_XY  1,9                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
 
   ; todos os mov ah,9 são destinados ao visual do final do programa
                            mov      ah,9
@@ -1407,8 +1444,6 @@ end_game proc
                            int      21h
 
               
-
-
                            mov      ah,9
                            lea      dx,  INSERT_ANOTHER_COIN
                            int      21h
@@ -1418,7 +1453,7 @@ end_game proc
                            mov      ah,1
                            int      21h
                            mov      bl,al
-                           move_XY  80,25                         ; mover cursor lá para baixo
+                           move_XY  80,25                       ; mover cursor lá para baixo
 
 
             
@@ -1426,7 +1461,7 @@ end_game proc
                            je       finaldojogo
                         
    
-                           cmp      bl,0dh                        ; reinicia o programa
+                           cmp      bl,0dh                      ; reinicia o programa
                            jmp      reinicia
 
 
