@@ -8,6 +8,8 @@
 ; ; falta implementar sistema de falar quantas tentativas falta / verificar se está certo o numero de tentativas em cada um 
 ; fazer as regras ; e tela que perdeu o jogo 
 ; falta zerar TUDO/ voltar ao valor original quando reinicia o programa 
+; fazer formulario com as regras do jogi 
+; fazer regras com o tamanho dos navios 
 
 
 
