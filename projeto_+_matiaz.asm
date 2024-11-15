@@ -6,10 +6,8 @@
 
 
 
-; fazer as regras ; e tela que perdeu o jogo 
-; falta zerar TUDO/ voltar ao valor original quando reinicia o programa 
-; fazer formulario com as regras do jogi 
-; fazer regras com o tamanho dos navios 
+; fazer formulario com as regras do jogo
+
 
 
 
@@ -93,8 +91,8 @@ endm
   ; parametro que cria uma linha em branco
   LINHA_L                  DB   13,10,'$'
 
-  Ask_linha                db   10,13, 'digite a linha da matriz (0-9) : $'
-  Ask_coluna               db   10,13, 'digite a coluna da matriz (A-J) : $'
+  Ask_linha                db   10,13, ' digite a linha da matriz (0-9) : $'
+  Ask_coluna               db   10,13, ' digite a coluna da matriz (A-J) : $'
 
   Acertou_tiro             db   10,13, ' Acertou seu merda $'
   Errou_tiro               db   10,13, 'Errou seu merda $'
@@ -110,7 +108,7 @@ endm
 
 
 
-  mapa                     db   '|_|_|_|_|_|_|_|_|_|_| A', 13, 10                                                                                                                                          ; si -2 = '_'   si -4 = '_ ' ...
+  mapa                     db   '|_|_|_|_|_|_|_|_|_|_| A', 13, 10                                                      ; si -2 = '_'   si -4 = '_ ' ...
                            db   '|_|_|_|_|_|_|_|_|_|_| B', 13, 10
                            db   '|_|_|_|_|_|_|_|_|_|_| C', 13, 10
                            db   '|_|_|_|_|_|_|_|_|_|_| D', 13, 10
@@ -125,7 +123,7 @@ endm
   underline                db   10,13, '_____________________$'
    
   variavel_de_soma_coluna  db   0
-  variavel_de_letra        db   41h                                                                                                                                                                        ; iniciar variavel com a letra 'A' ( para comparação futura )
+  variavel_de_letra        db   41h                                                                                    ; iniciar variavel com a letra 'A' ( para comparação futura )
  
 
   next_try                 db   10,13 ,'PRESS ENTER TO NEXT TRY $'
@@ -135,14 +133,6 @@ endm
 
 
   numeros_linha            db   ' 0 1 2 3 4 5 6 7 8 9 $'
-
-  contadoreasy             db   '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1'
-
-  contadormedium           db   '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
-
-  contadorhard             db   '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
-
-  contadoruncrumble        db   '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
 
   contador_saber_se_venceu db   19
 
@@ -159,16 +149,16 @@ endm
 
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZEASY               DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
-                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
-                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
-                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
-                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
+  MATRIZEASY               DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
+                           DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
+                           DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
+                           DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
+                           DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
 
   ; si = linha, bx = coluna
 
@@ -182,16 +172,16 @@ endm
 
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZMEDIUM             DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
-                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
-                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
-                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
-                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
+  MATRIZMEDIUM             DB   0,1,1,1,0,0,1,0,0,0                                                                    ; A -0 ; encouraçado
+                           DB   0,0,1,0,0,0,1,0,0,0                                                                    ; B - 10  ;fragata
+                           DB   0,0,0,0,0,0,1,0,0,0                                                                    ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
+                           DB   1,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
+                           DB   1,0,0,0,0,0,0,0,0,0                                                                    ; F
+                           DB   0,0,0,0,0,0,0,1,0,0                                                                    ; G; hidro
+                           DB   0,0,0,0,0,0,0,1,1,0                                                                    ; H ; hidro
+                           DB   0,0,0,0,0,0,0,1,0,0                                                                    ; I
+                           DB   0,1,1,1,1,0,0,0,0,0                                                                    ; J
 
   ; si = linha, bx = coluna
 
@@ -207,16 +197,16 @@ endm
  
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZHARD               DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
-                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
-                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
-                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
-                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
+  MATRIZHARD               DB   0,0,0,0,0,1,0,0,0,0                                                                    ; A -0 ; encouraçado
+                           DB   1,0,0,0,0,1,0,0,0,1                                                                    ; B - 10  ;fragata
+                           DB   1,0,0,0,0,1,0,0,0,1                                                                    ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,1                                                                    ; D
+                           DB   0,0,0,1,1,0,0,0,0,1                                                                    ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
+                           DB   0,0,0,0,0,0,0,0,0,1                                                                    ; G; hidro
+                           DB   0,0,0,0,0,0,0,0,1,1                                                                    ; H ; hidro
+                           DB   0,0,1,0,0,0,0,0,0,1                                                                    ; I
+                           DB   0,1,1,1,0,0,0,0,0,0                                                                    ; J
 
   ; si = linha, bx = coluna
 
@@ -228,16 +218,16 @@ endm
 
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZUNCRUMBLE          DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
-                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
-                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
-                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
-                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
-                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
-                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
+  MATRIZUNCRUMBLE          DB   0,1,0,0,0,0,0,0,1,1                                                                    ; A -0 ; encouraçado
+                           DB   0,1,0,0,1,1,1,,0,0                                                                    ; B - 10  ;fragata
+                           DB   0,1,0,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
+                           DB   0,1,0,0,0,0,1,1,0,0                                                                    ; D
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
+                           DB   0,1,0,0,0,0,1,0,0,0                                                                    ; G; hidro
+                           DB   1,1,0,0,0,1,1,1,0,0                                                                    ; H ; hidro
+                           DB   0,1,0,0,0,0,0,0,0,0                                                                    ; I
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
 
   ; si = linha, bx = coluna
 
@@ -270,9 +260,8 @@ endm
 
   Agradecimento3           db   '                     Boa tentativa, porem voce perdeu o jogo, volte sempre ! $'
 
-  TAKE_TIME                db   '                                                   PRESS G TO EXIT     $'
+  TAKE_TIME                db   '                                 PRESS ANYTHING TO EXIT      $'
 
-  INSERT_ANOTHER_COIN      DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
 
 
   ; parametro de saida do jogo
@@ -282,12 +271,12 @@ endm
 
   ; Regras
 
-  REGRA1                   db   '1 - Ao todo sao 6 navios que o usuario tem que derrubar, ou seja 19 coordenadas $'
-  REGRA2                   db   '2 - Apos selecionar o nivel, Digite a coordenada que deseja atacar ( Numero:Letra)$'
-  REGRA3                   db   '3 - Caso queira sair do jogo, quando aparecer a mensagem , precione "x" $'
-  REGRA4                   db   '4 - Caso voce acerte as 19 posicoes, voce irá vencer          $'
-  REGRA5                   db   '5 - No final, há opção de acabar com o jogo         $'
-  REGRA6                   db   '6 -  Para mais informacoes leia o manual do usuario, bom jogo         $'
+  REGRA1                   db   ' 1 - Ao todo sao 6 navios que o usuario tem que derrubar, ou seja 19 coordenadas $'
+  REGRA2                   db   ' 2 - Apos selecionar o nivel, Digite a coordenada que deseja atacar $'
+  REGRA3                   db   ' 3 - Caso queira sair do jogo, quando aparecer a mensagem , precione "x" $'
+  REGRA4                   db   ' 4 - Caso voce acerte as 19 posicoes, voce ira vencer          $'
+  REGRA5                   db   ' 5 - No final, ha opcao de acabar com o jogo         $'
+  REGRA6                   db   ' 6 - Para mais informacoes leia o manual do usuario, bom jogo         $'
 
 
 
@@ -322,7 +311,7 @@ main proc
 
 
 
-  reinicia:                
+           
 
                         
 
@@ -594,6 +583,7 @@ RULES proc
                            lea      dx, REGRA1
                            int      21h
 
+
                            lea      dx, LINHA_L
                            mov      ah,9
                            int      21h
@@ -608,13 +598,17 @@ RULES proc
                            lea      dx, LINHA_L
                            int      21h
 
-
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
                     
 
                            mov      ah,9
                            lea      dx,REGRA3
                            int      21h
-
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
         
 
                            mov      ah,9
@@ -625,7 +619,9 @@ RULES proc
                            lea      dx,REGRA4
                            int      21h
 
-             
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
 
                            mov      ah,9
                            lea      dx, LINHA_L
@@ -635,7 +631,9 @@ RULES proc
                            lea      dx,REGRA5
                            int      21h
 
-                    
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
 
                            mov      ah,9
                            lea      dx, LINHA_L
@@ -696,9 +694,12 @@ Level_select proc
 
                            call     limpatela
 
-                           move_XY  25,6
+                           move_XY  10,20
 
   ; MOSTRAR AS REGRAS
+                           mov      ax, 1112h                    ; diminuir o tamanho da
+                           int      10h
+
                            mov      ah,9
                            lea      dx, LINHA_L
                            int      21h
@@ -870,7 +871,7 @@ imprimir_mapa proc
                            lea      dx , LINHA_L
                            int      21h
 
- 
+
 
                            mov      ah, 09h
                            lea      dx, mapa                     ; imprime o mapa
@@ -890,9 +891,7 @@ visual_errou proc
  
 
                            lea      bx,mapa
-  ;add bx,1  ; primeira posição da primeira linha
-  ;add bx,24 ;  primeira posição da segunda linha
-  ;add bx,47   ; primeira posição da terceira linha
+
 
 
                            add      bx,si                        ; adds para pegar a posição na linha
@@ -1201,7 +1200,7 @@ GAME_INTERFACE_HARD proc
 
 
 
-                           mov      cx,20
+                           mov      cx,23
 
   l3:                      
 
@@ -1498,7 +1497,7 @@ end_game proc
 
                            call     limpatela
 
-                           move_XY  1,9                          ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+                           move_XY  10,7                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
 
   ; todos os mov ah,9 são destinados ao visual do final do programa
                            mov      ah,9
@@ -1568,13 +1567,13 @@ end_game proc
                            int      21h
 
                            mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
                            lea      dx,  TAKE_TIME
                            int      21h
 
-              
-                           mov      ah,9
-                           lea      dx,  INSERT_ANOTHER_COIN
-                           int      21h
 
 
 
@@ -1585,13 +1584,8 @@ end_game proc
 
                            cmp      al,'g'
                            je       finaldojogo
-               
-   
-                           cmp      bl,0dh                       ; reinicia o programa
-                 
-                           jmp      reinicia
 
-
+                           int      3
 
 
   finaldojogo:             
@@ -1681,10 +1675,6 @@ win_game proc
                            int      21h
 
               
-                           mov      ah,9
-                           lea      dx,  INSERT_ANOTHER_COIN
-                           int      21h
-
 
 
                            mov      ah,1
@@ -1698,9 +1688,6 @@ win_game proc
                            je       finaldojogo2
                         
    
-                           cmp      bl,0dh                       ; reinicia o programa
-                           jmp      reinicia
-
 
 
 
@@ -1790,11 +1777,7 @@ lost_game proc
                            lea      dx,  TAKE_TIME
                            int      21h
 
-              
-                           mov      ah,9
-                           lea      dx,  INSERT_ANOTHER_COIN
-                           int      21h
-
+       
 
 
                            mov      ah,1
@@ -1808,8 +1791,6 @@ lost_game proc
                            je       finaldojogo3
                         
    
-                           cmp      bl,0dh                       ; reinicia o programa
-                           jmp      reinicia
 
 
 
