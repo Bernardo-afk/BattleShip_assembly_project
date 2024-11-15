@@ -5,7 +5,7 @@
 
 
 
-; ; falta implementar sistema de falar quantas tentativas falta / verificar se está certo o numero de tentativas em cada um 
+
 ; fazer as regras ; e tela que perdeu o jogo 
 ; falta zerar TUDO/ voltar ao valor original quando reinicia o programa 
 ; fazer formulario com as regras do jogi 
@@ -46,6 +46,11 @@ move_XY macro x,y        ;Macro para pocionar o cursor numa posicao desejada
 
           pop_all
 endm
+
+
+
+
+
 
 
 ; ----------------------------------------------------------- ; 
@@ -141,8 +146,12 @@ endm
 
   contador_saber_se_venceu db 19
 
+
+
   remaining_chances db 10,13, 'You have $'
   more_chances db ' more chances $'
+    msg_invalido            db   'numero invalido, digite novamente. $'
+
 
   ;---------------------------------------------;
   ;  Nivel EASY                                 ;
@@ -259,6 +268,8 @@ endm
 
   Agradecimento2           db   '                         Parabens por vencer o jogar, volte sempre ! $'
 
+  Agradecimento3          db   '                     Boa tentativa, porem voce perdeu o jogo, volte sempre ! $'
+
   TAKE_TIME               db   '                                                   PRESS G TO EXIT     $'
 
   INSERT_ANOTHER_COIN     DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
@@ -312,6 +323,8 @@ main proc
 
 
   reinicia:                
+
+                        
 
                            call     limpatela
 
@@ -690,16 +703,15 @@ RULES endp
 
 Level_select proc
 
+  inicio_lvls:             
+
                            call     limpatela
-
-
 
                            call     limpatela
 
                            move_XY  25,6
 
   ; MOSTRAR AS REGRAS
-
                            mov      ah,9
                            lea      dx, LINHA_L
                            int      21h
@@ -770,34 +782,77 @@ Level_select proc
                            lea      dx, LINHA_L
                            int      21h
 
+                        
+                           jmp      perg
 
+
+;;;;;; manda a mensagem que o numero encontrado nao existe e fala para digitar novamnete, so ira passar caso o usuario digite uma opção valida
+  perg_erro:               
+                           move_XY  21,18
+
+                           mov      ah, 9
+                           lea      dx, msg_invalido
+                           int      21h
+                           mov      ah, 1
+                           int      21h
+                           cmp      al,'1'
+                           je       lvl1
+
+                           cmp      al,'2'
+                           je       lvl2
+
+                           cmp      al,'3'
+                           je       lvl3
+
+                           cmp      al,'4'
+                           je       lvl4
+                            
+                           jmp      invalido
+                           jmp      inicio_lvls
+
+  perg:                    
                            mov      ah,1
                            int      21h
 
                            cmp      al,'1'
+                           je       lvl1
+
+                           cmp      al,'2'
+                           je       lvl2
+
+                           cmp      al,'3'
+                           je       lvl3
+
+                           cmp      al,'4'
+                           je       lvl4
+
+                           jmp      invalido
+
+
+  lvl1:                    
                            call     GAME_INTERFACE_EASY
                            jmp      saidaqui
 
-                           cmp      al,'2'
+
+  lvl2:                    
                            call     GAME_INTERFACE_MEDIUM
                            jmp      saidaqui
 
-
-                           cmp      al,'3'
+  lvl3:                    
                            call     GAME_INTERFACE_HARD
                            jmp      saidaqui
 
-
-                           cmp      al,'4'
+  lvl4:                    
                            call     GAME_INTERFACE_UNCRUMBLE
                            jmp      saidaqui
 
+  invalido:                
+                           loop     perg_erro
 
-  saidaqui:                
+  saidaqui:               
 
                            ret
 Level_select endp
-
 
   
   ; ----------------------------------------------------------- ;
@@ -845,7 +900,7 @@ imprimir_mapa endp
 visual_errou proc
 
                            push_all
-
+ 
 
                            lea      bx,mapa
   ;add bx,1  ; primeira posição da primeira linha
@@ -884,7 +939,7 @@ visual_errou endp
 visual_acertou proc
 
                            push_all
-
+  
   sub contador_saber_se_venceu,1
                            lea      bx,mapa
   ;add bx,1  ; primeira posição da primeira linha
@@ -1026,12 +1081,15 @@ mostra_posição:
 
                   dec cx
                   cmp cx,0
-                  je saidaqui2      ; decrementar o 'loop'
+                  je saidaqui22      ; decrementar o 'loop'
                   jmp l1
 
 saidaqui2:
 
 call end_game
+saidaqui22:
+
+call lost_game
                            ret
 
 GAME_INTERFACE_EASY endp
@@ -1133,13 +1191,17 @@ mostra_posição2:
 
                   dec cx
                   cmp cx,0
-                  je saidaqui3      ; decrementar o 'loop'
+                  je saidaqui33      ; decrementar o 'loop'
                   jmp l1
 
 saidaqui3:
 
 call end_game
 
+
+saidaqui33:
+
+call lost_game
                            ret
 GAME_INTERFACE_MEDIUM endp
 
@@ -1227,7 +1289,19 @@ mostra_posição3:
 
                            call     feedback
 
-                           
+
+
+    
+
+
+skphere1 : 
+
+
+
+
+
+
+
                            mov      ah,1
                            int      21h
 
@@ -1239,9 +1313,13 @@ mostra_posição3:
 
 
                   dec cx
-                  cmp cx,0
-                  je saidaqui4      ; decrementar o 'loop'
+                  cmp cx,1
+                  je saidaqui44      ; decrementar o 'loop'
                   jmp l1
+
+
+saidaqui44 : 
+call lost_game
 
 saidaqui4:
 
@@ -1249,6 +1327,10 @@ call end_game
 
 
 
+
+
+mov ah,0
+int 16h ; trap 
 
                            ret
 GAME_INTERFACE_HARD endp
@@ -1329,13 +1411,17 @@ mostra_posição4:
 
   skip4:                   
 
+
+
+
+
                            mov      variavel_de_soma_coluna,0
                            mov      variavel_de_letra,41h
                       
 
                            call     feedback
 
-    
+
                                     
                            mov      ah,1
                            int      21h
@@ -1352,12 +1438,12 @@ mostra_posição4:
                   je saidaqui5      ; decrementar o 'loop'
                   jmp l1
 
-saidaqui5:
-
-call end_game
-
 skipall:
 mov ah,4ch
+
+saidaqui5:
+
+call lost_game
 
                            ret
 GAME_INTERFACE_UNCRUMBLE endp
@@ -1376,10 +1462,17 @@ feedback proc
         cmp contador_saber_se_venceu,0
         je winer
 
+       
+
 jmp continua
+
         winer: 
 
 call win_game
+
+
+
+
 continua:
 
 
@@ -1400,12 +1493,8 @@ continua:
 
                           mov ah,9 
                           lea dx,sair_em_qualquer_momento
-                          int 21h 
+                          int 21h
 
-
-
-
-                      
 
                            pop_all
 
@@ -1509,11 +1598,10 @@ end_game proc
 
 
             
-                           cmp      bl,'g'
-                           je       finaldojogo
-                        
+               
    
                            cmp      bl,0dh                      ; reinicia o programa
+                 
                            jmp      reinicia
 
 
@@ -1637,6 +1725,115 @@ win_game proc
 win_game endp
 
 
+lost_game proc 
 
+
+                           call     limpatela
+
+                           move_XY  1,9                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+
+  ; todos os mov ah,9 são destinados ao visual do final do programa
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, FIM1
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM2
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM3
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM4
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,FIM5
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+
+                           mov      ah,9
+                           lea      dx, FIM6
+                           int      21h
+     
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx, LINHA_L
+                           int      21h
+
+
+                           mov      ah,9
+                           lea      dx, Agradecimento3
+                           int      21h
+
+                           mov      ah,9
+                           lea      dx,  TAKE_TIME
+                           int      21h
+
+              
+                           mov      ah,9
+                           lea      dx,  INSERT_ANOTHER_COIN
+                           int      21h
+
+
+
+                           mov      ah,1
+                           int      21h
+                           mov      bl,al
+                           move_XY  80,25                       ; mover cursor lá para baixo
+
+
+            
+                           cmp      bl,'g'
+                           je       finaldojogo3
+                        
+   
+                           cmp      bl,0dh                      ; reinicia o programa
+                           jmp      reinicia
+
+
+
+
+  finaldojogo3:             
+                           mov      ah,4ch
+                           int      21h
+
+
+
+ret 
+lost_game endp 
 
 end main 
