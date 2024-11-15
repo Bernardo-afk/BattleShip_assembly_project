@@ -68,36 +68,36 @@ endm
   ;---------------------------------------------;
 
   ; Imagem inicial
-  D1                      DB   '                              O  O  O$'
-  D2                      DB   '                                      O$'
-  D3                      DB   '                                     __|__$'
-  D4                      DB   '                                     || ||_____$'
-  D5                      DB   '                                     || ||    |$'
-  D6                      DB   '                          --------------------------$'
-  D7                      DB   '                           \   O   O   O   O      /$'
-  D8                      DB   '                       ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~$'
-  D9                      DB   '                       _____ _____ _____ _____ __    _____ _____  $'
-                          D10  DB'                      | __  |  _  |_   _|  _  |  |  |  |  |  _  | $'
-                          D11  DB'                      | __ -|     | | | |     |  |__|     |     | $'
-                          D12  DB'                      |_____|__|__| |_| |__|__|_____|__|__|__|__| $'
-                          D13  DB'                       _____ _____ _____ _____ __  $'
-                          D14  DB'                      |   | |  _  |  |  |  _  |  | $'
-                          D15  DB'                      | | | |     |  |  |     |  |__$'
-                          D16  DB'                      |_|___|__|__|\___/|__|__|_____|$'
+  D1                       DB   '                              O  O  O$'
+  D2                       DB   '                                      O$'
+  D3                       DB   '                                     __|__$'
+  D4                       DB   '                                     || ||_____$'
+  D5                       DB   '                                     || ||    |$'
+  D6                       DB   '                          --------------------------$'
+  D7                       DB   '                           \   O   O   O   O      /$'
+  D8                       DB   '                       ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~$'
+  D9                       DB   '                       _____ _____ _____ _____ __    _____ _____  $'
+                           D10  DB'                      | __  |  _  |_   _|  _  |  |  |  |  |  _  | $'
+                           D11  DB'                      | __ -|     | | | |     |  |__|     |     | $'
+                           D12  DB'                      |_____|__|__| |_| |__|__|_____|__|__|__|__| $'
+                           D13  DB'                       _____ _____ _____ _____ __  $'
+                           D14  DB'                      |   | |  _  |  |  |  _  |  | $'
+                           D15  DB'                      | | | |     |  |  |     |  |__$'
+                           D16  DB'                      |_|___|__|__|\___/|__|__|_____|$'
 
-  INSERT_COIN             DB   '                         INSERT YOUR COIN - PRESS ENTER $'
+  INSERT_COIN              DB   '                         INSERT YOUR COIN - PRESS ENTER $'
 
 
   ; fim Imagem inicial
 
   ; parametro que cria uma linha em branco
-  LINHA_L                 DB   13,10,'$'
+  LINHA_L                  DB   13,10,'$'
 
-  Ask_linha               db   10,13, 'digite a linha da matriz (0-9) : $'
-  Ask_coluna              db   10,13, 'digite a coluna da matriz (A-J) : $'
+  Ask_linha                db   10,13, 'digite a linha da matriz (0-9) : $'
+  Ask_coluna               db   10,13, 'digite a coluna da matriz (A-J) : $'
 
-  Acertou_tiro            db   10,13, ' Acertou seu merda $'
-  Errou_tiro              db   10,13, 'Errou seu merda $'
+  Acertou_tiro             db   10,13, ' Acertou seu merda $'
+  Errou_tiro               db   10,13, 'Errou seu merda $'
 
   ;---------------------------------------------;
   ;  Campo do jogo                             ;
@@ -110,47 +110,47 @@ endm
 
 
 
-  mapa                    db   '|_|_|_|_|_|_|_|_|_|_| A', 13, 10                                                      ; si -2 = '_'   si -4 = '_ ' ...
-                          db   '|_|_|_|_|_|_|_|_|_|_| B', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| C', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| D', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| E', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| F', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| G', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| H', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| I', 13, 10
-                          db   '|_|_|_|_|_|_|_|_|_|_| J', 13
-                          db   '$'
+  mapa                     db   '|_|_|_|_|_|_|_|_|_|_| A', 13, 10                                                                                                                                          ; si -2 = '_'   si -4 = '_ ' ...
+                           db   '|_|_|_|_|_|_|_|_|_|_| B', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| C', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| D', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| E', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| F', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| G', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| H', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| I', 13, 10
+                           db   '|_|_|_|_|_|_|_|_|_|_| J', 13
+                           db   '$'
 
-  underline               db   10,13, '_____________________$'
+  underline                db   10,13, '_____________________$'
    
-  variavel_de_soma_coluna db   0
-  variavel_de_letra       db   41h                                                                                    ; iniciar variavel com a letra 'A' ( para comparação futura )
+  variavel_de_soma_coluna  db   0
+  variavel_de_letra        db   41h                                                                                                                                                                        ; iniciar variavel com a letra 'A' ( para comparação futura )
  
 
-  next_try                db   10,13 ,'PRESS ENTER TO NEXT TRY $'
+  next_try                 db   10,13 ,'PRESS ENTER TO NEXT TRY $'
 
-  sair_em_qualquer_momento db 10,13, 'PRESS X to exit$'
-
-
-
-  numeros_linha           db   ' 0 1 2 3 4 5 6 7 8 9 $'
-
-  contadoreasy      db '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1'
-
-  contadormedium db '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
-
-  contadorhard db '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
-
-  contadoruncrumble db '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
-
-  contador_saber_se_venceu db 19
+  sair_em_qualquer_momento db   10,13, 'PRESS X to exit$'
 
 
 
-  remaining_chances db 10,13, 'You have $'
-  more_chances db ' more chances $'
-    msg_invalido            db   'numero invalido, digite novamente. $'
+  numeros_linha            db   ' 0 1 2 3 4 5 6 7 8 9 $'
+
+  contadoreasy             db   '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1'
+
+  contadormedium           db   '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
+
+  contadorhard             db   '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
+
+  contadoruncrumble        db   '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'
+
+  contador_saber_se_venceu db   19
+
+
+
+  remaining_chances        db   10,13, 'You have $'
+  more_chances             db   ' more chances $'
+  msg_invalido             db   'numero invalido, digite novamente. $'
 
 
   ;---------------------------------------------;
@@ -159,16 +159,16 @@ endm
 
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZEASY              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
-                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
-                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
-                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
-                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+  MATRIZEASY               DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
+                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
+                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
+                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
+                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
 
   ; si = linha, bx = coluna
 
@@ -182,16 +182,16 @@ endm
 
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZMEDIUM            DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
-                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
-                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
-                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
-                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+  MATRIZMEDIUM             DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
+                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
+                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
+                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
+                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
 
   ; si = linha, bx = coluna
 
@@ -207,16 +207,16 @@ endm
  
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZHARD              DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
-                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
-                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
-                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
-                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+  MATRIZHARD               DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
+                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
+                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
+                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
+                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
 
   ; si = linha, bx = coluna
 
@@ -228,16 +228,16 @@ endm
 
 
   ;0 1 2 3 4 5 6 7 8 9
-  MATRIZUNCRUMBLE         DB   1,1,1,1,0,0,0,0,0,0                                                                    ; A -0 ; encouraçado
-                          DB   0,0,0,0,0,1,1,1,0,0                                                                    ; B - 10  ;fragata
-                          DB   0,1,1,0,0,0,0,0,0,0                                                                    ; C - 20   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; D
-                          DB   0,0,0,1,1,0,0,0,0,0                                                                    ; E   ; submarino
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; F
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; G; hidro
-                          DB   0,1,1,0,0,0,1,1,0,0                                                                    ; H ; hidro
-                          DB   0,1,0,0,0,0,0,1,0,0                                                                    ; I
-                          DB   0,0,0,0,0,0,0,0,0,0                                                                    ; J
+  MATRIZUNCRUMBLE          DB   1,1,1,1,0,0,0,0,0,0                                                                                                                                                        ; A -0 ; encouraçado
+                           DB   0,0,0,0,0,1,1,1,0,0                                                                                                                                                        ; B - 10  ;fragata
+                           DB   0,1,1,0,0,0,0,0,0,0                                                                                                                                                        ; C - 20   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; D
+                           DB   0,0,0,1,1,0,0,0,0,0                                                                                                                                                        ; E   ; submarino
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; F
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; G; hidro
+                           DB   0,1,1,0,0,0,1,1,0,0                                                                                                                                                        ; H ; hidro
+                           DB   0,1,0,0,0,0,0,1,0,0                                                                                                                                                        ; I
+                           DB   0,0,0,0,0,0,0,0,0,0                                                                                                                                                        ; J
 
   ; si = linha, bx = coluna
 
@@ -256,48 +256,48 @@ endm
 
 
 
-                          FIM1 DB'                            _______   __    __________        $'
-                          FIM2 DB'                           |   ____| |  |  |          |       $'
-                          FIM3 DB'                           |   |___  |  |  |   |  |   |       $'
-                          FIM4 DB'                           |   ____| |  |  |   |  |   |       $'
-                          FIM5 DB'                           |   |     |  |  |   |  |   |       $'
-                          FIM6 DB'                           |___|     |__|  |___|__|___|       $'
+                           FIM1 DB'                            _______   __    __________        $'
+                           FIM2 DB'                           |   ____| |  |  |          |       $'
+                           FIM3 DB'                           |   |___  |  |  |   |  |   |       $'
+                           FIM4 DB'                           |   ____| |  |  |   |  |   |       $'
+                           FIM5 DB'                           |   |     |  |  |   |  |   |       $'
+                           FIM6 DB'                           |___|     |__|  |___|__|___|       $'
 
 
-  Agradecimento           db   '                         Obrigado por jogar, volte sempre ! $'
+  Agradecimento            db   '                         Obrigado por jogar, volte sempre ! $'
 
   Agradecimento2           db   '                         Parabens por vencer o jogar, volte sempre ! $'
 
-  Agradecimento3          db   '                     Boa tentativa, porem voce perdeu o jogo, volte sempre ! $'
+  Agradecimento3           db   '                     Boa tentativa, porem voce perdeu o jogo, volte sempre ! $'
 
-  TAKE_TIME               db   '                                                   PRESS G TO EXIT     $'
+  TAKE_TIME                db   '                                                   PRESS G TO EXIT     $'
 
-  INSERT_ANOTHER_COIN     DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
+  INSERT_ANOTHER_COIN      DB   '                                                INSERT ANOTHER COIN - PRESS ENTER $'
 
 
   ; parametro de saida do jogo
-  PRESS_EXIT              DB   '                                                 EXIT GAME - PRESS G        $'
-  PRESS_RULES             DB   '                                                  SHOW THE RULES - PRESS R        $'
+  PRESS_EXIT               DB   '                                                 EXIT GAME - PRESS G        $'
+  PRESS_RULES              DB   '                                                  SHOW THE RULES - PRESS R        $'
 
 
   ; Regras
 
-  REGRA1                  db   '              1 -           $'
-  REGRA2                  db   '              2 -           $'
-  REGRA3                  db   '              3 -           $'
-  REGRA4                  db   '              4 -           $'
-  REGRA5                  db   '              5 -           $'
-  REGRA6                  db   '              6 -           $'
+  REGRA1                   db   '1 - Ao todo sao 6 navios que o usuario tem que derrubar, ou seja 19 coordenadas $'
+  REGRA2                   db   '2 - Apos selecionar o nivel, Digite a coordenada que deseja atacar ( Numero:Letra)$'
+  REGRA3                   db   '3 - Caso queira sair do jogo, quando aparecer a mensagem , precione "x" $'
+  REGRA4                   db   '4 - Caso voce acerte as 19 posicoes, voce irá vencer          $'
+  REGRA5                   db   '5 - No final, há opção de acabar com o jogo         $'
+  REGRA6                   db   '6 -  Para mais informacoes leia o manual do usuario, bom jogo         $'
 
 
 
   ; niveis
 
-  Select_level            db   '                          Select The Level  $'
-  NIVEL1                  db   '                          1 - Easy          $'
-  NIVEL2                  db   '                          2 - Medium        $'
-  NIVEL3                  db   '                          3 - Hard          $'
-  NIVEL4                  db   '                          4 - Uncrumble mode$'
+  Select_level             db   '                          Select The Level  $'
+  NIVEL1                   db   '                          1 - Easy          $'
+  NIVEL2                   db   '                          2 - Medium        $'
+  NIVEL3                   db   '                          3 - Hard          $'
+  NIVEL4                   db   '                          4 - Uncrumble mode$'
  
 
 
@@ -315,7 +315,7 @@ endm
 
 main proc
 
-                           mov      ax,@data                    ; chamando data para AX
+                           mov      ax,@data                     ; chamando data para AX
                            mov      ds,ax
 
 
@@ -328,12 +328,12 @@ main proc
 
                            call     limpatela
 
-                           move_XY  1,3                         ; 80 25  ; reposicionar cursor
+                           move_XY  1,3                          ; 80 25  ; reposicionar cursor
 
 
                      
                            call     tela_inicial
-                           move_XY  1,3                         ; 80 25  ; reposicionar cursor
+                           move_XY  1,3                          ; 80 25  ; reposicionar cursor
 
                            call     Vefica_CR_RULES
 
@@ -384,7 +384,7 @@ limpatela endp
 
   ; Rotina para imprimir uma string
 imprimir proc
-                           mov      ah, 09h                     ; Função DOS para imprimir string
+                           mov      ah, 09h                      ; Função DOS para imprimir string
                            int      21h
                            ret
 imprimir endp
@@ -539,9 +539,9 @@ tela_inicial endp
   ; pede entrada e verifica se é CR
 Vefica_CR_RULES proc
  
-                           MOV      AH, 01h                     ; Função para ler entrada de um caractere
+                           MOV      AH, 01h                      ; Função para ler entrada de um caractere
   Espera:                  
-                           INT      21h                         ; Chama interrupção para receber caractere
+                           INT      21h                          ; Chama interrupção para receber caractere
                            cmp      AL,'g'
                            je       acaba
     
@@ -550,9 +550,9 @@ Vefica_CR_RULES proc
     
 
 
-                           CMP      AL, 0Dh                     ; Compara se é "CR" (ASCII 13)
-                           JZ       limparateladousuario        ; Se for "CR", salta para o fim e sai do procedimento
-                           JMP      Espera                      ; Caso contrário, continua esperando entrada
+                           CMP      AL, 0Dh                      ; Compara se é "CR" (ASCII 13)
+                           JZ       limparateladousuario         ; Se for "CR", salta para o fim e sai do procedimento
+                           JMP      Espera                       ; Caso contrário, continua esperando entrada
     
 
   acaba:                   
@@ -572,7 +572,7 @@ Vefica_CR_RULES proc
   skipverifycr:            
 
 
-                           RET                                  ; Sai do procedimento
+                           RET                                   ; Sai do procedimento
 
 Vefica_CR_RULES endp
 
@@ -581,25 +581,23 @@ RULES proc
 
                            call     limpatela
 
-                           move_XY  1,4
+                           move_XY  10,20
 
   ; MOSTRAR AS REGRAS
                            mov      ah,9
                            lea      dx, LINHA_L
                            int      21h
 
+                           mov      ax, 1112h                    ; diminuir o tamanho da
+                           int      10h
                            mov      ah,9
                            lea      dx, REGRA1
                            int      21h
 
-                           mov      ah,9
                            lea      dx, LINHA_L
+                           mov      ah,9
                            int      21h
 
-
-                           mov      ah,9
-                           lea      dx, LINHA_L
-                           int      21h
 
 
                            mov      ah,9
@@ -611,18 +609,13 @@ RULES proc
                            int      21h
 
 
-                           mov      ah,9
-                           lea      dx, LINHA_L
-                           int      21h
+                    
 
                            mov      ah,9
                            lea      dx,REGRA3
                            int      21h
 
-                           mov      ah,9
-                           lea      dx, LINHA_L
-                           int      21h
-
+        
 
                            mov      ah,9
                            lea      dx, LINHA_L
@@ -632,10 +625,7 @@ RULES proc
                            lea      dx,REGRA4
                            int      21h
 
-                           mov      ah,9
-                           lea      dx, LINHA_L
-                           int      21h
-
+             
 
                            mov      ah,9
                            lea      dx, LINHA_L
@@ -645,10 +635,7 @@ RULES proc
                            lea      dx,REGRA5
                            int      21h
 
-                           mov      ah,9
-                           lea      dx, LINHA_L
-                           int      21h
-
+                    
 
                            mov      ah,9
                            lea      dx, LINHA_L
@@ -786,7 +773,7 @@ Level_select proc
                            jmp      perg
 
 
-;;;;;; manda a mensagem que o numero encontrado nao existe e fala para digitar novamnete, so ira passar caso o usuario digite uma opção valida
+  ;;;;;; manda a mensagem que o numero encontrado nao existe e fala para digitar novamnete, so ira passar caso o usuario digite uma opção valida
   perg_erro:               
                            move_XY  21,18
 
@@ -849,7 +836,7 @@ Level_select proc
   invalido:                
                            loop     perg_erro
 
-  saidaqui:               
+  saidaqui:                
 
                            ret
 Level_select endp
@@ -886,7 +873,7 @@ imprimir_mapa proc
  
 
                            mov      ah, 09h
-                           lea      dx, mapa                    ; imprime o mapa
+                           lea      dx, mapa                     ; imprime o mapa
                            int      21h
 
 
@@ -908,12 +895,12 @@ visual_errou proc
   ;add bx,47   ; primeira posição da terceira linha
 
 
-                           add      bx,si                       ; adds para pegar a posição na linha
+                           add      bx,si                        ; adds para pegar a posição na linha
                            add      bx,si
 
 
 
-                           add      bx,1                        ; passar para posição do quadradinho
+                           add      bx,1                         ; passar para posição do quadradinho
                            add      bl,variavel_de_soma_coluna
 
                            mov      byte ptr [bx], '~'
@@ -940,19 +927,19 @@ visual_acertou proc
 
                            push_all
   
-  sub contador_saber_se_venceu,1
+                           sub      contador_saber_se_venceu,1
                            lea      bx,mapa
   ;add bx,1  ; primeira posição da primeira linha
   ;add bx,24 ;  primeira posição da segunda linha
   ;add bx,47   ; primeira posição da terceira linha
 
 
-                           add      bx,si                       ; adds para pegar a posição na linha
+                           add      bx,si                        ; adds para pegar a posição na linha
                            add      bx,si
 
 
 
-                           add      bx,1                        ; passar para posição do quadradinho
+                           add      bx,1                         ; passar para posição do quadradinho
                            add      bl,variavel_de_soma_coluna
 
                            mov      byte ptr [bx], 11011100b
@@ -985,8 +972,8 @@ visual_acertou endp
   ; interface easy
 
 GAME_INTERFACE_EASY proc
-xor cx,cx 
-mov cx,30
+                           xor      cx,cx
+                           mov      cx,30
 
                        
   l1:                      
@@ -1006,7 +993,7 @@ mov cx,30
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                      ; supondo que si = 1
+                           and      si,0fh                       ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1028,7 +1015,7 @@ mov cx,30
                            je       mostra_posição
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25   ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna
@@ -1037,7 +1024,7 @@ mov cx,30
 mostra_posição:
 
 
-                           mov      al,MATRIZEASY[si+bx]        ;  move para al o valor desejado
+                           mov      al,MATRIZEASY[si+bx]         ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou
@@ -1072,24 +1059,24 @@ mostra_posição:
                            mov      ah,1
                            int      21h
 
-                          cmp al,'x' 
-                          je saidaqui2
+                           cmp      al,'x'
+                           je       saidaqui2
 
 
 
 
 
-                  dec cx
-                  cmp cx,0
-                  je saidaqui22      ; decrementar o 'loop'
-                  jmp l1
+                           dec      cx
+                           cmp      cx,0
+                           je       saidaqui22                   ; decrementar o 'loop'
+                           jmp      l1
 
-saidaqui2:
+  saidaqui2:               
 
-call end_game
-saidaqui22:
+                           call     end_game
+  saidaqui22:              
 
-call lost_game
+                           call     lost_game
                            ret
 
 GAME_INTERFACE_EASY endp
@@ -1122,7 +1109,7 @@ GAME_INTERFACE_MEDIUM proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                      ; supondo que si = 1
+                           and      si,0fh                       ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1144,7 +1131,7 @@ GAME_INTERFACE_MEDIUM proc
                            je       mostra_posição2
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25   ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna2
@@ -1153,7 +1140,7 @@ GAME_INTERFACE_MEDIUM proc
 mostra_posição2:
 
 
-                           mov      al,MATRIZMEDIUM[si+bx]      ;  move para al o valor desejado
+                           mov      al,MATRIZMEDIUM[si+bx]       ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou2
@@ -1182,26 +1169,26 @@ mostra_posição2:
                            mov      ah,1
                            int      21h
 
-                          cmp al,'x' 
-                          je saidaqui3
+                           cmp      al,'x'
+                           je       saidaqui3
 
 
 
 
 
-                  dec cx
-                  cmp cx,0
-                  je saidaqui33      ; decrementar o 'loop'
-                  jmp l1
+                           dec      cx
+                           cmp      cx,0
+                           je       saidaqui33                   ; decrementar o 'loop'
+                           jmp      l1
 
-saidaqui3:
+  saidaqui3:               
 
-call end_game
+                           call     end_game
 
 
-saidaqui33:
+  saidaqui33:              
 
-call lost_game
+                           call     lost_game
                            ret
 GAME_INTERFACE_MEDIUM endp
 
@@ -1233,7 +1220,7 @@ GAME_INTERFACE_HARD proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                      ; supondo que si = 1
+                           and      si,0fh                       ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1255,7 +1242,7 @@ GAME_INTERFACE_HARD proc
                            je       mostra_posição3
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25   ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna3
@@ -1264,7 +1251,7 @@ GAME_INTERFACE_HARD proc
 mostra_posição3:
 
 
-                           mov      al,MATRIZHARD[si+bx]        ;  move para al o valor desejado
+                           mov      al,MATRIZHARD[si+bx]         ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou3
@@ -1294,7 +1281,7 @@ mostra_posição3:
     
 
 
-skphere1 : 
+  skphere1:                
 
 
 
@@ -1305,32 +1292,32 @@ skphere1 :
                            mov      ah,1
                            int      21h
 
-                          cmp al,'x' 
-                          je saidaqui4
+                           cmp      al,'x'
+                           je       saidaqui4
 
 
 
 
 
-                  dec cx
-                  cmp cx,1
-                  je saidaqui44      ; decrementar o 'loop'
-                  jmp l1
+                           dec      cx
+                           cmp      cx,1
+                           je       saidaqui44                   ; decrementar o 'loop'
+                           jmp      l1
 
 
-saidaqui44 : 
-call lost_game
+  saidaqui44:              
+                           call     lost_game
 
-saidaqui4:
+  saidaqui4:               
 
-call end_game
-
-
+                           call     end_game
 
 
 
-mov ah,0
-int 16h ; trap 
+
+
+                           mov      ah,0
+                           int      16h                          ; trap
 
                            ret
 GAME_INTERFACE_HARD endp
@@ -1361,7 +1348,7 @@ GAME_INTERFACE_UNCRUMBLE proc
                            mov      ah,1
                            int      21h
                            mov      si,ax
-                           and      si,0fh                      ; supondo que si = 1
+                           and      si,0fh                       ; supondo que si = 1
   ; si já está salvo
 
 
@@ -1383,7 +1370,7 @@ GAME_INTERFACE_UNCRUMBLE proc
                            je       mostra_posição4
 
                            inc      variavel_de_letra
-                           add      variavel_de_soma_coluna,25  ; 0 25 50 75 100 125
+                           add      variavel_de_soma_coluna,25   ; 0 25 50 75 100 125
                            add      bx,10
 
                            jmp      confere_coluna4
@@ -1392,7 +1379,7 @@ GAME_INTERFACE_UNCRUMBLE proc
 mostra_posição4:
 
 
-                           mov      al,MATRIZUNCRUMBLE[si+bx]   ;  move para al o valor desejado
+                           mov      al,MATRIZUNCRUMBLE[si+bx]    ;  move para al o valor desejado
 
                            cmp      al,1
                            je       acertou4
@@ -1426,24 +1413,24 @@ mostra_posição4:
                            mov      ah,1
                            int      21h
 
-                          cmp al,'x' 
-                          je saidaqui5
+                           cmp      al,'x'
+                           je       saidaqui5
 
 
 
 
 
-                  dec cx
-                  cmp cx,0
-                  je saidaqui5      ; decrementar o 'loop'
-                  jmp l1
+                           dec      cx
+                           cmp      cx,0
+                           je       saidaqui5                    ; decrementar o 'loop'
+                           jmp      l1
 
-skipall:
-mov ah,4ch
+  skipall:                 
+                           mov      ah,4ch
 
-saidaqui5:
+  saidaqui5:               
 
-call lost_game
+                           call     lost_game
 
                            ret
 GAME_INTERFACE_UNCRUMBLE endp
@@ -1459,21 +1446,21 @@ feedback proc
                            push_all
  
 
-        cmp contador_saber_se_venceu,0
-        je winer
+                           cmp      contador_saber_se_venceu,0
+                           je       winer
 
        
 
-jmp continua
+                           jmp      continua
 
-        winer: 
+  winer:                   
 
-call win_game
-
-
+                           call     win_game
 
 
-continua:
+
+
+  continua:                
 
 
 
@@ -1491,9 +1478,9 @@ continua:
                            int      21h
 
 
-                          mov ah,9 
-                          lea dx,sair_em_qualquer_momento
-                          int 21h
+                           mov      ah,9
+                           lea      dx,sair_em_qualquer_momento
+                           int      21h
 
 
                            pop_all
@@ -1511,7 +1498,7 @@ end_game proc
 
                            call     limpatela
 
-                           move_XY  1,9                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+                           move_XY  1,9                          ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
 
   ; todos os mov ah,9 são destinados ao visual do final do programa
                            mov      ah,9
@@ -1594,13 +1581,13 @@ end_game proc
                            mov      ah,1
                            int      21h
                            mov      bl,al
-                           move_XY  80,25                       ; mover cursor lá para baixo
+                           move_XY  80,25                        ; mover cursor lá para baixo
 
-
-            
+                           cmp      al,'g'
+                           je       finaldojogo
                
    
-                           cmp      bl,0dh                      ; reinicia o programa
+                           cmp      bl,0dh                       ; reinicia o programa
                  
                            jmp      reinicia
 
@@ -1620,7 +1607,7 @@ win_game proc
 
                            call     limpatela
 
-                           move_XY  1,9                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+                           move_XY  1,9                          ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
 
   ; todos os mov ah,9 são destinados ao visual do final do programa
                            mov      ah,9
@@ -1703,7 +1690,7 @@ win_game proc
                            mov      ah,1
                            int      21h
                            mov      bl,al
-                           move_XY  80,25                       ; mover cursor lá para baixo
+                           move_XY  80,25                        ; mover cursor lá para baixo
 
 
             
@@ -1711,13 +1698,13 @@ win_game proc
                            je       finaldojogo2
                         
    
-                           cmp      bl,0dh                      ; reinicia o programa
+                           cmp      bl,0dh                       ; reinicia o programa
                            jmp      reinicia
 
 
 
 
-  finaldojogo2:             
+  finaldojogo2:            
                            mov      ah,4ch
                            int      21h
 
@@ -1725,12 +1712,12 @@ win_game proc
 win_game endp
 
 
-lost_game proc 
+lost_game proc
 
 
                            call     limpatela
 
-                           move_XY  1,9                         ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
+                           move_XY  1,9                          ; mover cursor para altura desejada ( começar a imprimir no meio do programa )
 
   ; todos os mov ah,9 são destinados ao visual do final do programa
                            mov      ah,9
@@ -1813,7 +1800,7 @@ lost_game proc
                            mov      ah,1
                            int      21h
                            mov      bl,al
-                           move_XY  80,25                       ; mover cursor lá para baixo
+                           move_XY  80,25                        ; mover cursor lá para baixo
 
 
             
@@ -1821,19 +1808,19 @@ lost_game proc
                            je       finaldojogo3
                         
    
-                           cmp      bl,0dh                      ; reinicia o programa
+                           cmp      bl,0dh                       ; reinicia o programa
                            jmp      reinicia
 
 
 
 
-  finaldojogo3:             
+  finaldojogo3:            
                            mov      ah,4ch
                            int      21h
 
 
 
-ret 
-lost_game endp 
+                           ret
+lost_game endp
 
 end main 
